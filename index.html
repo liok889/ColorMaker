@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="keywords" content="visualization, color, colormaps">
@@ -12,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,700;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;1,100;1,400&display=swap" rel="stylesheet">
-    <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet"/>
+    <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- math library -->
 
@@ -135,7 +136,7 @@
     #topPanel {
         width: 100%;
         height: 45px;
-        padding: 10 10;
+        padding: 10px 10px;
         color: white;
         text-align: left;
         background-color: #394a59;
@@ -154,9 +155,9 @@
         min-height: 100vh;
     }
     #sidePanel {
-        width: 290;
+        width: 290px;
         float: left;
-        padding: 10 10;
+        padding: 10px 10px;
         color: white;
         font-size: 15px;
     }
@@ -314,7 +315,7 @@
         height: 100%;
         width: 160px;
         float: left;
-        padding: 10 10;
+        padding: 10px 10px;
         color: white;
         font-size: 15px;
     }
@@ -1035,6 +1036,16 @@
         border-color: #007bff;
         box-shadow: 0 0 3px 1px rgb(94, 158, 214, 0.5);
     }
+
+    /* Credits Paper Hyperlink */
+    .txtLink {
+        color: red;
+        text-decoration: none;
+        font-size: 15px;
+    }
+    .txtLink:hover{
+        text-decoration: underline;
+    }
     </style>
 </head>
 
@@ -1064,7 +1075,7 @@
                 <!--<button id="buttonRun" onclick="generateButton()">Generate</button>-->
             </div>
 
-            <div class="sideHead" style="clear: all">
+            <div class="sideHead" style="clear: both">
                 <div class="controlLabel_history" style="margin-top: 15px; padding-left: 10px; padding-top: 5px;" onclick="toggleSide('history')">
                     Generated Designs <span style="font-size: 13px">
                         (<a style="color: #eeeeee" href="#" onclick="event.stopPropagation(); hist.clear()">clear all</a>)
@@ -1072,7 +1083,7 @@
                 </div>
             </div>
             <div class="sideCard sideCard_history" id="sideCard_history" style="padding: 0px; display: block;">
-                <div height="350" class="svgHistory">
+                <div style="height: 150px" class="svgHistory">
                     <svg width="300" height="600" id="svgHistory">
                         <g transform="translate(40,10)" id="historyGroup"></g>
                     </svg>
@@ -1084,22 +1095,22 @@
             </div>
             <div class="sideCard sideCard_profile" id="sideCard_profile" style="padding: 10px; display: block;">
                 <div style="margin-bottom: 10px; margin-top: 5px;">
-                    <label class="lumProfile" for="profileLinear" id="label_profileLinear"><img class="lumProfileImage" id="linear"  src="profile/linear.png" alt="Linear"/></label>
+                    <label class="lumProfile" for="profileLinear" id="label_profileLinear"><img class="lumProfileImage" id="linear"  src="profile/linear.png" alt="Linear"></label>
                     <input class="luminanceButton" type="radio" value="linear" name="lumProfile" id="profileLinear" checked="checked">
 
-                    <label class="lumProfile" for="profileDiverging" id="label_profileDiverging"><img class="lumProfileImage" id="diverging" src="profile/diverging.png" alt="Diverging"/></label>
+                    <label class="lumProfile" for="profileDiverging" id="label_profileDiverging"><img class="lumProfileImage" id="diverging" src="profile/diverging.png" alt="Diverging"></label>
                     <input class="luminanceButton" type="radio" value="diverging" name="lumProfile" id="profileDiverging">
 
-                    <label class="lumProfile" for="profileWave" id="label_profileWave"><img class="lumProfileImage" id="wave" src="profile/wave.png" alt="Wave" /></label>
+                    <label class="lumProfile" for="profileWave" id="label_profileWave"><img class="lumProfileImage" id="wave" src="profile/wave.png" alt="Wave"></label>
                     <input class="luminanceButton" type="radio" value="wave" name="lumProfile" id="profileWave">
 
-                    <label class="lumProfile" for="profileInvertedLinear" id="label_profileInvertedLinear"><img class="lumProfileImage" id="inverted_linear" src="profile/invLinear.png" alt="invLinear" /></label>
+                    <label class="lumProfile" for="profileInvertedLinear" id="label_profileInvertedLinear"><img class="lumProfileImage" id="inverted_linear" src="profile/invLinear.png" alt="invLinear"></label>
                     <input class="luminanceButton" type="radio" value="linear_inverted" name="lumProfile" id="profileInvertedLinear">
 
-                    <label class="lumProfile" for="profileInvertedDiverging" id="label_profileInvertedDiverging"><img class="lumProfileImage" id="inverted_diverging" src="profile/invDiverging.png" alt="invDiverging" /></label>
+                    <label class="lumProfile" for="profileInvertedDiverging" id="label_profileInvertedDiverging"><img class="lumProfileImage" id="inverted_diverging" src="profile/invDiverging.png" alt="invDiverging"></label>
                     <input class="luminanceButton" type="radio" value="diverging_inverted" name="lumProfile" id="profileInvertedDiverging">
 
-                    <label class="lumProfile" for="profileInvertedWave" id="label_profileInvertedWave"><img class="lumProfileImage" id="inverted_wave" src="profile/invWave.png" alt="invWave" /></label>
+                    <label class="lumProfile" for="profileInvertedWave" id="label_profileInvertedWave"><img class="lumProfileImage" id="inverted_wave" src="profile/invWave.png" alt="invWave"></label>
                     <input class="luminanceButton" type="radio" value="wave_inverted" name="lumProfile" id="profileInvertedWave">
                 </div>
                 <div class="controlLabel">
@@ -1149,7 +1160,7 @@
                         <div class="tutorial-content">
                             <span class="close" id="closeTutorial">&times;</span>
                             <h2 id="videoTitle">Video Title</h2>
-                            <video id="videoPlayer" controls width="100%" height="auto"></video>
+                            <video id="videoPlayer" controls width="700"></video>
                             <div id="videoLinks"></div>
                         </div>
                     </div>
@@ -1210,12 +1221,12 @@
                             <g id="colormapLines" transform="translate(0,5)"></g>
                             <foreignObject x="0" y="0" width="540" height="50">
                                 <div style="margin-left: 22.5px">
-                                    <text id="luminance" style="float: right;">Luminance</text>
-                                    <input class="linesButton no-style"  style="float: right;" type="checkbox" name="linegraph" id="luminance" checked="checked">
-                                    <text id="perc_uniformity" style="float: right; margin-right:10px">Perceptual uniformity</text>
-                                    <input class="linesButton no-style"  style="float: right;" type="checkbox" name="linegraph" id="perc_uniformity">
-                                    <text id="smoothness" style="float: right; margin-right:10px">Smoothness</text>
-                                    <input class="linesButton no-style"  style="float: right;" type="checkbox" name="linegraph" id="smoothness">
+                                    <span id="luminance" style="float: right;">Luminance</span>
+                                    <input class="linesButton no-style"  style="float: right;" type="checkbox" name="linegraph" checked="checked">
+                                    <span id="perc_uniformity" style="float: right; margin-right:10px">Perceptual uniformity</span>
+                                    <input class="linesButton no-style"  style="float: right;" type="checkbox" name="linegraph">
+                                    <span id="smoothness" style="float: right; margin-right:10px">Smoothness</span>
+                                    <input class="linesButton no-style"  style="float: right;" type="checkbox" name="linegraph">
                                 </div>
                             </foreignObject>
                         </g>
@@ -1276,18 +1287,18 @@
                     <div id="overlay" class="overlay"></div>
                     &nbsp;|&nbsp;
                     <i style="font-size:15px; margin-top: 5px;" class="fa">&#xf09b;</i>
-                    <a href="https://github.com/liok889/ColorMaker" target="_blank" id="tutorialVids">Source Code</a>
+                    <a href="https://github.com/liok889/ColorMaker" target="_blank" id="sourceCodeLink">Source Code</a>
                     &nbsp;|&nbsp;
                     <i style="font-size:15px; margin-top: 5px;" class="fa">&#xf05a;</i>
                     <a href="#" id="creditsLink" onclick="openCredits()">Credits</a>
                     <div id="credImport" class="credImport"></div>
                     <div id="popupCred" class="popupCred">
                         <h3 style="margin-top: 0px; margin-left: calc((100% - 80px) / 2);">Credits</h3>
-                        <label style="font-size: 15px;">ColorMaker was designed by researchers at Indiana University Indianapolis and Renmin University of China. If you would like to read about how ColorMaker works, you can find the details in our paper [add link]. If you would like to cite this work, please use the following citation:</label>
+            <span style="font-size: 15px;">ColorMaker was designed by researchers at Indiana University Indianapolis and Renmin University of China. If you would like to read about how ColorMaker works, you can find the details in our paper <a href="https://doi.org/10.1145/3613904.3642265" class="txtLink" target="_blank">here</a>. <br><br>If you would like to cite this work, please use the following citation:</span>
 <pre style="font-size: 13px;">
 @inproceedings{salvi2024colormaker,
-    title={Color Maker: a Mixed-Initiative Approach to Creating Accessible Color Maps},
-    author={Salvi, Amey A and Lu, Kecheng and Papka, Michael E. and Wang, Yunhai and Reda, Khairi},
+        title={Color Maker: a Mixed-Initiative Approach to Creating Accessible Color Maps},
+    author={Salvi, Amey and Lu, Kecheng and Papka, Michael E. and Wang, Yunhai and Reda, Khairi},
     booktitle={Proceedings of the 2024 CHI Conference on Human Factors in Computing Systems},
     doi={10.1145/3613904.3642265},
     pages={1-17},
@@ -1295,8 +1306,8 @@
 }</pre>
                         <div style="display: flex;">
                             <label style="width: 50%; font-size: 15px;">ColorMaker is based on research supported by the National Science Foundation under award 1942429.</label>
-                            <img src="profile/Renmin_University_of_China_logo.png" title="Renmin University of China" alt="Renmin University of China" style="width: 60px; height: 60px; margin-left: 25px; margin-top: -10px;"></a>
-                            <img src="profile/IUI_logoNew.png" title="Indiana University Indianapolis" alt="Indiana University Indianapolis" style="width: 181.6px; height: 51.2px; margin-left: 40px; margin-top: -5px;"></a>
+                            <img src="profile/Renmin_University_of_China_logo.png" title="Renmin University of China" alt="Renmin University of China" style="width: 60px; height: 60px; margin-left: 25px; margin-top: -10px;">
+                            <img src="profile/IUI_logoNew.png" title="Indiana University Indianapolis" alt="Indiana University Indianapolis" style="width: 181.6px; height: 51.2px; margin-left: 40px; margin-top: -5px;">
                         </div>
                         <p>
                         <button type="button" id="credButton" onclick="closeCredits()">Close</button>
@@ -1323,7 +1334,7 @@
                             <input type="number" class="no-style" style="margin: 10px; width: 60px;" id="imageHeight" required>
                             <br>
                             <div style="margin-bottom: 5px; margin-top: 10px;">
-                                <label for="format">Format:</label>
+                                <span>Format:</span>
                             </div>
                             <input type="radio" class="data-format" id="int16" name="format" value="int16" checked>
                             <label for="int16">Int16</label>

@@ -1,4 +1,4 @@
-# Color Maker: A Mixed-Initiative Approach to Creating Accessible Color Maps
+# ColorMaker
 
 ColorMaker is a color design tool that makes it easy for visualization designers of all expertise to create high quality custom colormaps. Designers can easily specify their color requirements with simple drag and drop interactions. ColorMaker uses simulated annealing to generate a colormap that meets these specified preferences, while also satisfying the established perceptual guidelines.
 

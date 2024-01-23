@@ -1,0 +1,2280 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="visualization, color, colormaps">
+    <link rel="stylesheet" href="lib/jquery-ui.css">
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/jquery-ui.js"></script>
+    <script src="lib/d3.v5.min.js"></script>
+    <script src="lib/d3-queue.v3.min.js"></script>
+    <script src="lib/d3-cam02.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,700;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;1,100;1,400&display=swap" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- math library -->
+
+    <script src="utils.js"></script>
+    <script src="scaffold.js"></script>
+    <script src="user_model.js"></script>
+    <script src="luminance.js"></script>
+    <script src="optimizer.js"></script>
+    <script src="colormap.js"></script>
+    <script src="optimize_wrapper.js"></script>
+    <script src="picker.js"></script>
+    <script src="history.js"></script>
+
+    <!-- tools for scalar field generation and visualization -->
+    <script src="lib/three.js"></script>
+    <script src="lib/scalar.js"></script>
+    <script src="lib/gl_pipeline.js"></script>
+    <script src="lib/coloranalysis.js"></script>
+    <script src="lib/scalarvis.js"></script>
+    <script src="lib/terrain.js"></script>
+    <script src="lib/perlin.js"></script>
+    <script src="lib/noisegen.js"></script>
+    <script src="scalar_examples.js"></script>
+    <script src="curve.js"></script>
+    <script src="ramp_editor.js"></script>
+    <script src="cvd.js"></script>
+    <script src="worker_control.js"></script>
+    <script src="linegraph.js"></script>
+    <script src="simulator.js"></script>
+
+    <title>Color Maker: color maps for visualization</title>
+    <style>
+
+    .selectIndicator {
+        pointer-events: none
+    }
+
+    .potentialDrop {
+        fill: #bbbbbb;
+        opacity: 0.85;
+        stroke: none
+    }
+    .scalarExampleCanvas {
+        margin-right: 12px;
+        margin-bottom: 12px;
+    }
+    body {
+        background-color: #dedede; /*#d2d2d2;*/
+        font-family: 'Roboto', sans-serif;
+        font-size: 14px;
+
+        -webkit-user-select: none; /* Safari */
+        -ms-user-select: none; /* IE 10 and IE 11 */
+        user-select: none; /* Standard syntax */
+
+    }
+    .panels {
+        /*background-color: #394a59;*/
+        background-color: #3a3a3a;
+    }
+
+    .colorCurveBeads {
+        stroke: black;
+        stroke-width: 0.5px;
+    }
+    .colorCurvePath {
+        stroke: black;
+        stroke-width: 1px;
+        fill: none
+    }
+    .colorSpaceToggleButton {
+        font-size: 17px;
+    }
+
+
+
+
+    .animate-charcter
+    {
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-filter: drop-shadow(2px 2px #333);
+          filter: drop-shadow(2px 2px #333);
+
+      background-image: linear-gradient(
+         /*
+        -225deg,
+        #231557 0%,
+        #44107a 29%,
+        #ff1361 67%,
+        #fff800 100%
+        */
+        -200deg,
+        rgb(242, 124, 150) 0%,
+        rgb(242, 124, 150) 25%,
+        rgb(248, 242, 190) 50%,
+        rgb(171, 237, 251) 75%,
+        rgb(171, 237, 251) 100%
+      );
+      background-size: auto auto;
+      background-clip: border-box;
+      background-size: 200% auto;
+      color: #fff;
+      background-clip: text;
+      /* text-fill-color: transparent; */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: textclip 12s linear infinite;
+      display: inline-block;
+      animation-direction: alternate
+
+    }
+
+    @keyframes textclip {
+      to {
+        background-position: 100% center;
+      }
+    }
+
+    #topPanel {
+        width: 100%;
+        height: 45px;
+        padding: 10 10;
+        color: white;
+        text-align: left;
+        background-color: #394a59;
+        box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.9);
+        z-index: 1;
+    }
+    .toolTitle {
+        letter-spacing: -0.05em;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+        font-size: 54px;
+        line-height: 50px;
+    }
+    #container {
+        display: flex;
+        min-height: 100vh;
+    }
+    #sidePanel {
+        width: 290;
+        float: left;
+        padding: 10 10;
+        color: white;
+        font-size: 15px;
+    }
+    .controlLabel {
+        padding: 5px;
+        letter-spacing: 0.01em;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+        font-size: 15px;
+        color: #eeeeee
+    }
+    .labelText {
+        color: #eeeeee
+    }
+    .label {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+        font-size: 16px
+    }
+
+    .svgHistory {
+        height: 180px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        background-color: #d2d2d2;
+    }
+    #svgHistory {
+        background-color: #d2d2d2;
+    }
+
+    #buttonRun {
+        background: #007fff;
+        border: 1px solid #003eff;
+        box-shadow: 0 0 3px 1px rgb(94, 158, 214);
+        font-weight: normal;
+        line-height: normal;
+        color: #ffffff;
+        font-family: 'Roboto';
+        font-size: 17px;
+        border-radius: 3px;
+        padding: 0.4em 1em;
+        margin-right: 0.1em;
+        cursor: pointer;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    /* Slider */
+    .slider {
+        background: #f6f6f6;
+        width: 250px;
+        height: 7.5px;
+        border-radius: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border: 1px solid #c5c5c5;
+    }
+    .slider .ui-slider-range {
+        background-color: #007fff;
+    }
+    .slider .ui-slider-handle {
+        background-color: #007fff;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        border: 1px solid #003eff;
+        box-shadow: 0 0 3px 1px rgb(94, 158, 214);
+    }
+
+
+    .multi-slider {
+        background-color: #f6f6f6;
+        width: 250px;
+        height: 7.5px;
+        border-radius: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border: 1px solid #c5c5c5;
+    }
+    .multi-slider .ui-slider-handle {
+        background-color: #007fff;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        border: 1px solid #003eff;
+        box-shadow: 0 0 3px 1px rgb(94, 158, 214);
+    }
+    .multi-slider .ui-slider-range {
+        background-color: #007fff;
+    }
+
+    .trashCan {
+        cursor: url('data:image/x-icon;base64,AAACAAEAICAAAAAAAACoEAAAFgAAACgAAAAgAAAAQAAAAAEAIAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAYAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAABgAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAMAAAAFQAAABwAAAAcAAAAHAAAABwAAAAcAAAAHAAAABwAAAAVAAAADAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAABwAAAAvAAAAOAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAAC8AAAAcAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATAAAALAAAAEUAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAARQAAACwAAAATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAFMAAABRAAAANQAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/qKio/6ioqP+oqKj/qKio/6ioqP+oqKj/qKio/6ioqP+oqKj/AAAA/wAAAFQAAAA4AAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP+oqKj/AAAA/6ioqP8AAAD/qKio/wAAAP+oqKj/AAAA/6ioqP8AAAD/AAAAVQAAADkAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/6ioqP8AAAD/qKio/wAAAP+oqKj/AAAA/6ioqP8AAAD/qKio/wAAAP8AAABVAAAAOQAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/qKio/wAAAP+oqKj/AAAA/6ioqP8AAAD/qKio/wAAAP+oqKj/AAAA/wAAAFUAAAA5AAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP+oqKj/AAAA/6ioqP8AAAD/qKio/wAAAP+oqKj/AAAA/6ioqP8AAAD/AAAAVQAAADkAAAAdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/6ioqP8AAAD/qKio/wAAAP+oqKj/AAAA/6ioqP8AAAD/qKio/wAAAP8AAABVAAAAOwAAAB8AAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/qKio/wAAAP+oqKj/AAAA/6ioqP8AAAD/qKio/wAAAP+oqKj/AAAA/wAAAFUAAABCAAAAJQAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAP+oqKj/qKio/6ioqP+oqKj/qKio/6ioqP+oqKj/qKio/6ioqP8AAAD/AAAAVAAAAEcAAAAsAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAMAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAABPAAAAQwAAACkAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAAP+oqKj/qKio/6ioqP+oqKj/qKio/6ioqP+oqKj/qKio/6ioqP+oqKj/qKio/wAAAP8AAAAuAAAAHAAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXAAAA/6ioqP+oqKj/qKio/6ioqP+oqKj/qKio/6ioqP+oqKj/qKio/6ioqP+oqKj/AAAA/wAAABUAAAAMAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAABIAAAAiAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAAYAAAABgAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/AAAA/wAAABIAAAAZAAAAEAAAAP8AAAAKAAAAEQAAABcAAAAVAAAAFQAAAP8AAAAXAAAAEQAAAAoAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8AAAD/AAAA/wAAAAgAAAAFAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAAcAAAAFAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA///////////////////////////////////////////////////////////////////////////////////////////wB///4AP//+AD///gA///4AP//+AD///gA///4AP//+AD///gA///wAH//8AB//9gA///O+///xgP//8='), auto;
+    }
+
+    .colorAxisLabel {
+        font-size: 15px;
+        font-family: 'Roboto', 'Open Sans', sans-serif;
+        font-weight: 400;
+    }
+    .smallText {
+        font-size: 13px;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+    }
+
+    /* Luminance Profile Buttons */
+    .lumProfile {
+        margin-bottom: 5px;
+        padding: 0%;
+        margin-top: 5px;
+    }
+    .lumProfile input[type="radio"]:checked + label {
+        border: 1px solid #003eff;
+        box-shadow: 0 0 3px 1px rgb(94, 158, 214);
+    }
+    .lumProfile img {
+        max-width: 78px;
+        max-height: 30px;
+    }
+
+    #colormapStats {
+        display: block;
+    }
+    .collapseStats {
+        font-size: 16px;
+        cursor: pointer;
+        border: 1px solid #c5c5c5;
+        border-radius: 5px;
+        padding: 0.4em 1em;
+        background-color: #f6f6f6;
+    }
+    .active, .collapseStats:hover
+    {
+        background-color: #eeeeee;
+    }
+    .collapseStats:after {
+        content: '\25B2';
+        font-size: 12px;
+        color: rgb(0, 0, 0);
+        float: right;
+        margin-left: 5px;
+        font-size: 12px;
+
+    }
+    .collapseStats.active:after {
+        content: "\25BC";
+        font-size: 12px;
+    }
+    #cvdColormap {
+        display: none;
+    }
+
+    #taskPanel {
+        height: 100%;
+        width: 160px;
+        float: left;
+        padding: 10 10;
+        color: white;
+        font-size: 15px;
+    }
+
+    .mainCard {
+        transform-origin: top left;
+        /*
+        border: 1px solid rgba(119, 119, 119, 0.4);
+        background-color: #d2d2d2;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+        */
+
+    }
+    .vizCard {
+
+        /*
+        border: 1px solid rgba(119, 119, 119, 0.4);
+        background-color: #d2d2d2;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+        */
+
+    }
+    .cardHead {
+        padding: 5px;
+        padding-left: 20px;
+        border: 0px solid #5f7c95;
+        background-color: #9f9f9f;
+    }
+    .sideCard {
+        /* margin-top: 18px; */
+        /* border: 1px solid #5f7c95; */
+        padding: 5px;
+        /*background-color: #495b6b;*/
+        background-color: #4a4a4a;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+    }
+    .sideHead {
+        color: #eeeeee;
+        background-color: #333f49;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+    }
+
+
+    #visionDropdown {
+        width: 100%;
+        padding: 5px;
+        font-size: 15px;
+        border: 1px solid #c5c5c5;
+        border-radius: 5px;
+        background-color: #f6f6f6;
+    }
+    #visionDropdown option:hover {
+        background-color: #050e17;
+    }
+
+    #svgStats {
+        display: block;
+    }
+    #svgStats.expanded {
+        height: 185px;
+    }
+
+    #exportStats {
+        display: none;
+    }
+
+    .exportBtn {
+        font-size: 16px;
+        cursor: pointer;
+        border: 1px solid #c5c5c5;
+        border-radius: 5px;
+        padding: 0.4em 1em;
+        background-color: #f6f6f6;
+    }
+    .active, .exportBtn:hover {
+        background-color: #eeeeee;
+    }
+    .exportBtn:after {
+        content: '\25BC';
+        font-size: 12px;
+        color: rgb(0, 0, 0);
+        float: right;
+        margin-left: 5px;
+    }
+    .exportBtn.active:after {
+        content: "\25B2";
+        font-size: 12px;
+    }
+    #svgExport {
+        display: none;
+    }
+    #svgExport.expanded {
+        height: 185px;
+    }
+
+    #spaceDropdown {
+        float: right;
+        font-size: 15px;
+        border: 1px solid #c5c5c5;
+        border-radius: 5px;
+        background-color: #f6f6f6;
+    }
+    #spaceDropdown option:hover {
+        background-color: #050e17;
+    }
+    #keysDropdown {
+        font-size: 15px;
+        border: 1px solid #c5c5c5;
+        border-radius: 5px;
+        background-color: #f6f6f6;
+    }
+    #keysDropdown option:hover {
+        background-color: #050e17;
+    }
+
+    #exportText {
+        resize: none;
+        background-color: #f6f6f6;
+        box-sizing: border-box;
+        border: 1px solid #505050;
+        padding: 5px;
+        border-radius: 3px;
+        font-size: 14px;
+        font-family: 'Roboto', sans-serif;
+        line-height: 1.5;
+    }
+    #exportText:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 3px 1px rgb(94, 158, 214, 0.5);
+    }
+
+    #mainExp {
+        background: #007fff;
+        border: 1px solid #003eff;
+        box-shadow: 0 0 3px 1px rgb(94, 158, 214, 0.5);
+        font-weight: normal;
+        line-height: normal;
+        color: #ffffff;
+        font-family: 'Roboto';
+        font-size: 13px;
+        border-radius: 3px;
+        padding: 0.2em 0.5em;
+        margin-right: 0.1em;
+        cursor: pointer;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    #buttonGenerate {
+        background: #007fff;
+        border: 1px solid #003eff;
+        box-shadow: 0 0 3px 1px rgb(94, 158, 214, 0.5);
+        font-weight: normal;
+        line-height: normal;
+        color: #ffffff;
+        font-family: 'Roboto';
+        cursor: pointer;
+        font-size: 17px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        width: 150px;
+
+
+        /*
+        font-size: 13px;
+        border-radius: 3px;
+        padding: 0.2em 0.5em;
+        margin-right: 0.1em;
+        cursor: pointer;
+        vertical-align: middle;
+        text-align: center;
+        */
+    }
+
+    .buttonExp {
+        position: relative;
+        display: inline-block;
+        font-size: 15px;
+        text-align: right;
+    }
+    p.menuOptions {
+        font-size: 14px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        font-family: Roboto, sans-sans-serif;
+    }
+
+
+    .dropdown-content {
+        cursor: pointer;
+        display: none;
+        position: absolute;
+        background-color: #007fff;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+        z-index: 1;
+        right: 0;
+        font-size: 11px;
+        border-radius: 3px;
+    }
+    .dropdown-content p {
+        color: #ffffff;
+        padding: 0.1em 0.5em;
+        display: block;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .dropdown-content p:hover {
+        background-color: #adadad;
+    }
+    .buttonExp:hover .dropdown-content {
+        display: block;
+    }
+
+    /* #cvdCheckbox {
+        padding: 5px;
+        letter-spacing: 0.01em;
+        font-family: 'Roboto', 'Open Sans', sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        background-color: #d2d2d2
+    }
+    #cvdCheckbox {
+        padding: 5px;
+        letter-spacing: 0.01em;
+        font-family: 'Roboto', 'Open Sans', sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        color: white;
+        background-color: blue;
+    } */
+
+    .controlLabel_history {
+        padding: 5px;
+        letter-spacing: 0.01em;
+        font-family: 'Roboto', 'Open Sans', sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        background-color: #333f49;
+        cursor: pointer;
+    }
+    .controlLabel_history:after {
+        content: '\25B2';
+        font-size: 12px;
+        color: #f6f6f6;
+        float: right;
+    }
+    .controlLabel_history.active:after {
+        content: "\25BC";
+        font-size: 12px;
+    }
+    .sideCard_history {
+        padding: 5px;
+        /*background-color: #495b6b;*/
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+    }
+    .controlLabel_profile {
+        padding: 5px;
+        letter-spacing: 0.01em;
+        font-family: 'Roboto', 'Open Sans', sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        background-color: #333f49;
+        cursor: pointer;
+    }
+    .controlLabel_profile:after {
+        content: '\25B2';
+        font-size: 12px;
+        color: #f6f6f6;
+        float: right;
+    }
+    .controlLabel_profile.active:after {
+        content: "\25BC";
+        font-size: 12px;
+    }
+    .sideCard_profile {
+        padding: 5px;
+        /*background-color: #495b6b;*/
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+    }
+    .controlLabel_optimize {
+        padding: 5px;
+        letter-spacing: 0.01em;
+        font-family: 'Roboto', 'Open Sans', sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        background-color: #333f49;
+        cursor: pointer;
+    }
+    .controlLabel_optimize:after {
+        content: '\25B2';
+        font-size: 12px;
+        color: #f6f6f6;
+        float: right;
+    }
+    .controlLabel_optimize.active:after {
+        content: "\25BC";
+        font-size: 12px;
+    }
+    .sideCard_optimize {
+        padding: 5px;
+        /*background-color: #495b6b;*/
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+    }
+    .controlLabel_cvd {
+        padding: 5px;
+        letter-spacing: 0.01em;
+        font-family: 'Roboto', 'Open Sans', sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        background-color: #333f49;
+        cursor: pointer;
+    }
+    .controlLabel_cvd:after {
+        content: '\25B2';
+        font-size: 12px;
+        color: #f6f6f6;
+        float: right;
+    }
+    .controlLabel_cvd.active:after {
+        content: "\25BC";
+        font-size: 12px;
+    }
+    .sideCard_cvd {
+        padding: 5px;
+        /*background-color: #495b6b;*/
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+    }
+
+    .labelAlert {
+        display: none;
+        margin-bottom:5px;
+        margin-left: 5px;
+        font-size:13px;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+        color: #000;
+    }
+
+    .collapseLines {
+        font-size: 16px;
+        cursor: pointer;
+        border: 1px solid #c5c5c5;
+        border-radius: 5px;
+        padding: 0.4em 1em;
+        background-color: #f6f6f6;
+    }
+    .active{}
+    .collapseLines:hover {
+        background-color: #eeeeee;
+    }
+    .collapseLines:after {
+        content: '\25BC';
+        font-size: 12px;
+        color: rgb(0, 0, 0);
+        float: right;
+        margin-left: 5px;
+        font-size: 12px;
+
+    }
+    .collapseLines.active:after {
+        content: "\25B2";
+        font-size: 12px;
+    }
+
+    #svgLines {
+        display: none;
+    }
+    #svgLines.expanded {
+        height: 185px;
+    }
+
+    .linesToggleButton {
+        font-size: 10px;
+        float: right;
+    }
+
+    /* Optimize for CVD Button */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 30px;
+        height: 20px;
+        border: 0px solid transparent;
+        background: transparent;
+        box-shadow: none;
+    }
+    .switch:hover,
+    .switch:active {
+        border: 0px solid transparent !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    .sliderCVD {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #d2d2d2;
+        transition: .4s;
+    }
+    .sliderCVD:before {
+        position: absolute;
+        content: "";
+        height: 25px;
+        width: 25px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+    }
+    input:checked + .sliderCVD {
+        background-color: #2196F3;
+    }
+    input:focus + .sliderCVD {
+        box-shadow: 0 0 1px #2196F3;
+    }
+    input:checked + .sliderCVD:before {
+        transform: translateX(27px);
+    }
+    .sliderCVD.roundCVD {
+        border-radius: 34px;
+    }
+    .sliderCVD.roundCVD:before {
+        border-radius: 50%;
+    }
+    .textCVD {
+        position: static;
+        right: auto;
+        width: auto;
+        color: #f6f6f6;
+    }
+
+    /* Tooltip */
+    .tooltip {
+        position: absolute;
+        background-color: #394a59;
+        border: 1px solid #000000;
+        padding: 10px;
+        border-radius: 5px;
+        font-family: 'Roboto', sans-serif;
+        color: #f6f6f6;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        pointer-events: none;
+        z-index: 1000;
+        width: 150px;
+    }
+
+
+    .tutorial {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+    }
+    .tutorial-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fefefe;
+        padding: 20px;
+        z-index: 1000;
+    }
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 1000;
+    }
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        z-index: 1000;
+    }
+
+    /* tutorial video */
+    #videoLinks {
+        margin-top: 10px;
+    }
+    #videoLinks a {
+        display: block;
+        margin-bottom: 5px;
+        padding: 5px;
+        text-decoration: none;
+        color: #333;
+        font-weight: normal;
+    }
+    #videoLinks a:hover {
+        background-color: #eee;
+    }
+    #videoLinks a.active {
+        font-weight: bold;
+    }
+    @media (min-width: 600px) {
+        #videoLinks a {
+            display: inline-block;
+            margin-right: 10px;
+        }
+    }
+    #videoTitle {
+        margin-top: 0;
+        font-size: 1.5em;
+        color: #000;
+    }
+
+    /* overlay dialog box (first visit) */
+    .overlay {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: rgb(0, 0, 0);
+        text-align: center;
+        z-index: 1001;
+    }
+    .overlayBox {
+        display: inline-block;
+        width: 200px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-30%, -75%);
+        background-color: #4a4a4a;
+        border: 1px solid #000000;
+        padding: 1em 1em;
+        border-radius: 3px;
+        font-family: 'Roboto', sans-serif;
+        color: #f6f6f6;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+        z-index: 1001;
+    }
+
+    #arrow {
+        display: inline-block;
+        position: absolute;
+        top: 0%;
+        left: -50px;
+        font-size: 50px;
+        z-index: 1001;
+        color: #ffffff;
+    }
+
+    /* Import Custom Data */
+    #importDataButton {
+        background: #f6f6f6;
+        border: 1px solid #c5c5c5;
+        border-radius: 3px;
+        font-weight: normal;
+        line-height: normal;
+        color: #454545;
+        font-family: 'Roboto';
+        cursor: pointer;
+        font-size: 17px;
+        padding: 0.4em 1em;
+        display: inline-block;
+        margin-left: 30px;
+        margin-top: -5px;
+        vertical-align: middle;
+        text-align: center;
+    }
+    #importDataButton:hover {
+        background-color: #eeeeee;
+    }
+
+    .popupCred {
+        width: 700px;
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #ffffff;
+        border: 1px solid #c5c5c5;
+        padding: 1em 1em;
+        border-radius: 3px;
+        font-family: 'Roboto', sans-serif;
+        color: #454545;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+        z-index: 1001;
+    }
+    #binButton, #credButton {
+        background: #f6f6f6;
+        border: 1px solid #454545;
+        padding: 0.4em 1em;
+        border-radius: 3px;
+        font-family: 'Roboto', sans-serif;
+        color: #454545;
+        font-size: 12px;
+        cursor: pointer;
+        font-weight: normal;
+        line-height: normal;
+        vertical-align: middle;
+        text-align: center;
+        display: inline-block;
+        margin-left: calc((100% - 80px) / 2);
+    }
+    #binButton:hover, #credButton:hover {
+        background-color: #eeeeee;
+    }
+    .popupCred pre {
+        -moz-user-select: all;
+        -khtml-user-select: all;
+        -webkit-user-select: all;
+        -ms-user-select: all;
+        user-select: all;
+        overflow: auto;
+        white-space: pre-wrap; 
+    }
+
+    .popup {
+        width: 450px;
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #4a4a4a;
+        border: 1px solid #000000;
+        padding: 1em 1em;
+        border-radius: 3px;
+        font-family: 'Roboto', sans-serif;
+        color: #f6f6f6;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+        z-index: 1001;
+    }
+
+    .darkImport {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: rgb(0, 0, 0);
+        z-index: 1000;
+    }
+    #binButton, #closeButton {
+        background: #f6f6f6;
+        border: 1px solid #c5c5c5;
+        padding: 0.4em 1em;
+        border-radius: 3px;
+        font-family: 'Roboto', sans-serif;
+        color: #454545;
+        font-size: 14px;
+        cursor: pointer;
+        font-weight: normal;
+        line-height: normal;
+        vertical-align: middle;
+        text-align: center;
+        display: inline-block;
+    }
+    #binButton:hover, #closeButton:hover {
+        background-color: #eeeeee;
+    }
+
+    #imageWidth, #imageHeight {
+        resize: none;
+        background-color: #f6f6f6;
+        box-sizing: border-box;
+        border: 1px solid #505050;
+        padding: 5px;
+        border-radius: 3px;
+        font-size: 14px;
+        font-family: 'Roboto', sans-serif;
+        line-height: 1;
+    }
+    #imageWidth:focus, #imageHeight:focus {
+        outline: none;
+        border-color: #c5c5c5;
+        box-shadow: 0 0 3px 1px rgba(222, 222, 222, 0.5);
+    }
+
+    /* HEX Code */
+    #hexContainer {
+        float: right;
+        display: flex;
+        align-items: center;
+    }
+    #hexLabel {
+        margin-right: 5px;
+        margin-top: 2px;
+        font-size: 18px;
+        color: #757575;
+    }
+    #hexColor {
+        float: right;
+        width: 100px;
+        margin-top: 5px;
+        margin-right: 36px;
+        resize: none;
+        background-color: #f6f6f6;
+        box-sizing: border-box;
+        border: 1px solid #505050;
+        border-radius: 3px;
+        font-size: 12px;
+        font-family: 'Roboto', sans-serif;
+        line-height: 1.5;
+    }
+    #hexColor:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 3px 1px rgb(94, 158, 214, 0.5);
+    }
+    </style>
+</head>
+
+<body style="margin: 0 0">
+    <!--
+    <div class="topPanel" id="topPanel">
+        <span class="animate-charcter toolTitle"><i>Color</i>Maker</span>
+    </div>
+    -->
+    <div id="container" style="width: 1330px; box-sizing: border-box;">
+        <div class="panels" id="sidePanel" style="float: left;">
+            <div style="text-align: center; margin-top: 10px;">
+                <span class="animate-charcter toolTitle"><i>Color</i>Maker</span><br>
+            </div>
+            <div style="text-align:center; margin-left: 5px"><span style="font-size: 14px; font-family: Roboto, sans-serif; font-weight: 300; color: #eeeeee">custom color maps for data visualization</span></div>
+
+            <div style=" margin-top: 20px; text-align: center; clear: both;">
+                <div class="buttonExp" style="margin: 5px; margin-right: 20px;">
+                    <button id="buttonGenerate" onclick="generateButton()">Generate<span style="margin-left: 10px;">&#9662;</span></button>
+                    <div class="dropdown-content" id="generateDropDown">
+                        <p class="menuOptions" onclick="generateButton()">1 design</p>
+                        <p class="menuOptions" onclick="generateButton(3)">3 designs</p>
+                        <p class="menuOptions" onclick="generateButton(5)">5 designs</p>
+                    </div>
+                </div>
+
+                <!--<button id="buttonRun" onclick="generateButton()">Generate</button>-->
+            </div>
+
+            <div class="sideHead" style="clear: all">
+                <div class="controlLabel_history" style="margin-top: 15px; padding-left: 10px; padding-top: 5px;" onclick="toggleSide('history')">
+                    Generated Designs <span style="font-size: 13px">
+                        (<a style="color: #eeeeee" href="#" onclick="event.stopPropagation(); hist.clear()">clear all</a>)
+                    </span>
+                </div>
+            </div>
+            <div class="sideCard sideCard_history" id="sideCard_history" style="padding: 0px; display: block;">
+                <div height="350" class="svgHistory">
+                    <svg width="300" height="600" id="svgHistory">
+                        <g transform="translate(40,10)" id="historyGroup"></g>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="sideHead">
+                <div class="controlLabel_profile" style="margin-top: 15px; padding-left: 10px; padding-top: 5px;" onclick="toggleSide('profile')">Luminance Profile</div>
+            </div>
+            <div class="sideCard sideCard_profile" id="sideCard_profile" style="padding: 10px; display: block;">
+                <div style="margin-bottom: 10px; margin-top: 5px;">
+                    <label class="lumProfile" for="profileLinear" id="label_profileLinear"><img class="lumProfileImage" id="linear"  src="profile/linear.png" alt="Linear"/></label>
+                    <input class="luminanceButton" type="radio" value="linear" name="lumProfile" id="profileLinear" checked="checked">
+
+                    <label class="lumProfile" for="profileDiverging" id="label_profileDiverging"><img class="lumProfileImage" id="diverging" src="profile/diverging.png" alt="Diverging"/></label>
+                    <input class="luminanceButton" type="radio" value="diverging" name="lumProfile" id="profileDiverging">
+
+                    <label class="lumProfile" for="profileWave" id="label_profileWave"><img class="lumProfileImage" id="wave" src="profile/wave.png" alt="Wave" /></label>
+                    <input class="luminanceButton" type="radio" value="wave" name="lumProfile" id="profileWave">
+
+                    <label class="lumProfile" for="profileInvertedLinear" id="label_profileInvertedLinear"><img class="lumProfileImage" id="inverted_linear" src="profile/invLinear.png" alt="invLinear" /></label>
+                    <input class="luminanceButton" type="radio" value="linear_inverted" name="lumProfile" id="profileInvertedLinear">
+
+                    <label class="lumProfile" for="profileInvertedDiverging" id="label_profileInvertedDiverging"><img class="lumProfileImage" id="inverted_diverging" src="profile/invDiverging.png" alt="invDiverging" /></label>
+                    <input class="luminanceButton" type="radio" value="diverging_inverted" name="lumProfile" id="profileInvertedDiverging">
+
+                    <label class="lumProfile" for="profileInvertedWave" id="label_profileInvertedWave"><img class="lumProfileImage" id="inverted_wave" src="profile/invWave.png" alt="invWave" /></label>
+                    <input class="luminanceButton" type="radio" value="wave_inverted" name="lumProfile" id="profileInvertedWave">
+                </div>
+                <div class="controlLabel">
+                    <span class="labelText">Luminance Range</span>
+                    <div class="multi-slider" id="sliderLum" data-min="5" data-max="95"></div>
+                    <span class="sliderValue" id="sliderLumValue"></span>
+                </div>
+            </div>
+
+            <div class="sideHead">
+                <div class="controlLabel_optimize" style="margin-top: 15px; padding-left: 10px; padding-top: 5px;" onclick="toggleSide('optimize')">Optimization Settings</div>
+            </div>
+            <div class="sideCard sideCard_optimize" id="sideCard_optimize" style="padding: 10px; display: block;">
+                <div class="controlLabel" style="margin-top: 0px;">Colormap Quality
+                    <div class="slider" id="sliderQual" data-min="500" data-max="7500" data-value="2000">
+                        <script> d3.select("#sliderQual").attr('data-value', ITERATIONS_PER_TEMP);</script>
+                        <div class="slider-range"></div>
+                    </div>
+                    <div style="font-size: 12px">
+                        <div style="float: left">Faster optimization</div>
+                        <div style="float: right">Higher quality (slower)</div>
+                    </div>
+
+                </div>
+                <div class="controlLabel" style="margin-top: 15px">Colorfulness
+                    <div class="slider" id="sliderCon" data-min="0" data-max="1" data-value="0.33"></div>
+                    <div style="font-size: 12px">
+                        <div style="float: left">Fewer hues</div>
+                        <div style="float: right">More hues</div>
+                    </div>
+                </div>
+                <!--
+                <div class="controlLabel">Color Name Salience
+                    <div class="slider" id="sliderSal" data-min="-0" data-max="100" data-value="50"></div>
+                </div>
+                -->
+            </div>
+
+            <div class="sideHead">
+                <div class="controlLabel_cvd" style="margin-top: 15px; padding-left: 10px; padding-top: 5px;" onclick="toggleSide('cvd')">Color Vision Deficiency (CVD)</div>
+            </div>
+            <div class="sideCard sideCard_cvd" id="sideCard_cvd" style="padding: 10px; display: block;">
+                <div class="controlLabel" style="margin-top: 0px;"><!--Select Vision Deficiency-->
+                    <!--<span class="label" style="font-size:15px; margin-left: 2px;">odel:</span>&nbsp;-->
+                    <!-- Video Tutorials -->
+                    <div id="myTutorial" class="tutorial">
+                        <div class="tutorial-content">
+                            <span class="close" id="closeTutorial">&times;</span>
+                            <h2 id="videoTitle">Video Title</h2>
+                            <video id="videoPlayer" controls width="100%" height="auto"></video>
+                            <div id="videoLinks"></div>
+                        </div>
+                    </div>
+                    <select id="visionDropdown" style="margin-top: 5px; background-color: #d2d2d2">
+                        <option value="normal">Normal color vision</option>
+                        <option value="deuteranomaly">Deuteranomaly  (green weakness)</option>
+                        <option value="protanomaly">Protanomaly (red weakness)</option>
+                        <option value="tritanomaly">Tritanomaly (blue weakness)</option>
+                    </select>
+                    <br>
+                    <br>
+                    <label class="switch">
+                        <input type="checkbox" id="cvdCheckbox">
+                        <span class="sliderCVD roundCVD"></span>
+                    </label>
+                    <span class="textCVD" style="margin-left: 20px;">Optimize for CVD</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="width: 1000px;  height: 100%; margin-top: 10px; margin-left: 15px; float: left">
+
+            <div class="mainCard" style="width: 600px; margin: 0 0; float: left ">
+                <div style="margin-top: 5px; margin-left: 22.5px">
+                    <span class="label">Color space</span>&nbsp;
+                    <label class="colorSpaceToggleButton" for="colorspaceRGB">RGB</label>
+                    <input class="colorSpaceButton" type="radio" name="colorspace" id="colorspaceRGB">
+                    <label class="colorSpaceToggleButton" for="colorspaceHSL">HSL</label>
+                    <input class="colorSpaceButton" type="radio" name="colorspace" id="colorspaceHSL">
+                    <label class="colorSpaceToggleButton" for="colorspaceHCL">HCL</label>
+                    <input class="colorSpaceButton" type="radio" name="colorspace" id="colorspaceHCL" checked="checked">
+                    <label class="colorSpaceToggleButton" for="colorspaceLAB">LAB</label>
+                    <input class="colorSpaceButton" type="radio" name="colorspace" id="colorspaceLAB">
+                    <label class="colorSpaceToggleButton" for="colorspaceJAB">CAM02</label>
+                    <input class="colorSpaceButton" type="radio" name="colorspace" id="colorspaceJAB">
+                </div>
+
+                <!-- HEX Code -->
+                <div id="hexContainer">
+                    <label for="hexColor" id="hexLabel">#</label>
+                    <input maxlength="6" type="text" class="hexColor no-style" id="hexColor" name="hexColor" placeholder="da291c" pattern="([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" required>
+                </div>
+
+                <div style="float: left; width: 560px; margin: 5px; margin-left: 8px;">
+                    <svg id="svgMain" width="585" height="375">
+                        <g transform="translate(15,0)">
+                            <g id="newPicker" transform="translate(0, 0)"></g>
+                            <g id="colormapUI" transform="translate(0,105)"></g>
+                            <g id="cvdColormap" transform="translate(0,150)"></g>
+                            <foreignObject x="45" y="120" width="400" height="50">
+                                <span class="labelAlert">Colors are placed close to each other but far in color space. May result in non-aesthetic colors.</span>
+                            </foreignObject>
+                        </g>
+                    </svg>
+                    <div class="collapseLines" style="width: 505px; margin: 5px; margin-left: 12.5px;" onclick="toggleColormapLines()">Perceptual characteristics</div>
+                    <svg id="svgLines" style="transform: translate(5,0);" width="555" height="135">
+                        <g transform="translate(5,0)">
+                            <g id="colormapLines" transform="translate(0,5)"></g>
+                            <foreignObject x="0" y="0" width="540" height="50">
+                                <div style="margin-left: 22.5px">
+                                    <text id="luminance" style="float: right;">Luminance</text>
+                                    <input class="linesButton no-style"  style="float: right;" type="checkbox" name="linegraph" id="luminance" checked="checked">
+                                    <text id="perc_uniformity" style="float: right; margin-right:10px">Perceptual uniformity</text>
+                                    <input class="linesButton no-style"  style="float: right;" type="checkbox" name="linegraph" id="perc_uniformity">
+                                    <text id="smoothness" style="float: right; margin-right:10px">Smoothness</text>
+                                    <input class="linesButton no-style"  style="float: right;" type="checkbox" name="linegraph" id="smoothness">
+                                </div>
+                            </foreignObject>
+                        </g>
+                    </svg>
+                    <div class="collapseStats" style="width: 505px; margin: 5px; margin-left: 12.5px;" onclick="toggleColormapStats()">Colormap curve</div>
+                    <svg id="svgStats" style="transform: translate(5,0);" width="555" height="185">
+                        <g transform="translate(5,0)">
+                            <g id="colormapStats" transform="translate(0,5)"></g>
+                        </g>
+                    </svg>
+
+                    <div class="exportBtn" style="width: 505px; margin: 5px; margin-left: 12.5px;" onclick="toggleExport()">Export</div>
+                    <svg id="svgExport" style="transform: translate(5,0);" width="555" height="105">
+                        <foreignObject x="20" y="0" width="540" height="300">
+                            <span class="label" style="display: inline-block; margin-bottom:5px; margin-left: 5px; font-size:13px">Control points:</span>&nbsp;
+                            <div class="newLabel" style="display: inline-block; margin-left: 0px;">
+                                <select id="keysDropdown" style="margin: 5px;">
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="25" selected>25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Format:
+                                <select id="spaceDropdown" style="margin: 5px; margin-left: 10px">
+                                    <option value="HEX">Hex</option>
+                                    <option value="RGB">RGB</option>
+                                    <option value="HSL">HSL</option>
+                                    <option value="LCH">LCH</option>
+                                    <option value="LAB">LAB</option>
+                                    <option value="JAB">JAB</option>
+                                </select>
+                            </div>
+                            <div class="buttonExp" style="clear: both; margin: 5px; margin-right: 20px; float:right">
+                                <button id="mainExp">Download <span style="margin-left: 10px;">&#9662;</span></button>
+                                <div class="dropdown-content">
+                                    <p onclick="exportMap('json')">JSON</p>
+                                    <p onclick="exportMap('csv')">CSV</p>
+                                </div>
+                            </div>
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="width: 100%; height: 100%;">
+                                <textarea id="exportText" readonly style="width: 525px; height: 70px;"></textarea>
+                            </div>
+                        </foreignObject>
+                        <g transform="translate(5,0)">
+                            <g id="exportStats" transform="translate(0,5)"></g>
+                        </g>
+                    </svg>
+                </div>
+                <!-- Open Tutorial Videos -->
+                <div class="tutorialVid" style="clear: both; margin-top: 15px; margin-left: 25px; position: relative;">
+                    <!-- <i style="font-size: 15px" class="fa">&#xf059;</i> -->
+                    <i style="font-size: 14px" class="fa">&#xf03d;</i>
+                    <a href="#" id="tutorialVids">Introduction</a>
+                    <div id="overlay" class="overlay"></div>
+                    &nbsp;|&nbsp;
+                    <i style="font-size:15px; margin-top: 5px;" class="fa">&#xf09b;</i>
+                    <a href="https://github.com/liok889/ColorMaker" target="_blank" id="tutorialVids">Source Code</a>
+                    &nbsp;|&nbsp;
+                    <i style="font-size:15px; margin-top: 5px;" class="fa">&#xf05a;</i>
+                    <a href="#" id="creditsLink" onclick="openCredits()">Credits</a>
+                    <div id="credImport" class="credImport"></div>
+                    <div id="popupCred" class="popupCred">
+                        <h3 style="margin-top: 0px; margin-left: calc((100% - 80px) / 2);">Credits</h3>
+                        <label style="font-size: 15px;">ColorMaker was designed by researchers at Indiana University Indianapolis and Renmin University of China. If you would like to read about how ColorMaker works, you can find the details in our paper [add link]. If you would like to cite this work, please use the following citation:</label>
+<pre style="font-size: 13px;">
+@inproceedings{salvi2024colormaker,
+    title={Color Maker: a Mixed-Initiative Approach to Creating Accessible Color Maps},
+    author={Salvi, Amey A and Lu, Kecheng and Papka, Michael E. and Wang, Yunhai and Reda, Khairi},
+    booktitle={Proceedings of the 2024 CHI Conference on Human Factors in Computing Systems},
+    doi={10.1145/3613904.3642265},
+    pages={1-17},
+    year={2024}
+}</pre>
+                        <div style="display: flex;">
+                            <label style="width: 50%; font-size: 15px;">ColorMaker is based on research supported by the National Science Foundation under award 1942429.</label>
+                            <img src="profile/Renmin_University_of_China_logo.png" title="Renmin University of China" alt="Renmin University of China" style="width: 60px; height: 60px; margin-left: 25px; margin-top: -10px;"></a>
+                            <img src="profile/IUI_logoNew.png" title="Indiana University Indianapolis" alt="Indiana University Indianapolis" style="width: 181.6px; height: 51.2px; margin-left: 40px; margin-top: -5px;"></a>
+                        </div>
+                        <p>
+                        <button type="button" id="credButton" onclick="closeCredits()">Close</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vizCard" style="margin-left: 0px; padding-top: 0px; float: left; height: 100%; width: 330px;">
+                <div style="margin: 10px;">
+                    <!-- import custom data -->
+                    <button id="importDataButton" onclick="openPopup()">Import image or scalar field</button>
+                    <div id="darkImport" class="darkImport"></div>
+                    <div id="popup" class="popup">
+                        <label style="font-size: 14px;">Upload an image (PNG, JPEG, GIF) or a binary scalar field. For binary files, specify dimensions and format below.</label>
+                        <p>
+                        <form id="inputForm"  style="margin: 0; padding: 0;">
+                            <label for="binaryFile">File:</label>
+                            <input type="file" class="no-style" style="margin: 10px; margin-left: 30px;" id="binaryFile" onchange="onChangeUpload(this.files);" required>
+                            <br>
+                            <label for="imageWidth">Width:</label>
+                            <input type="number" class="no-style" style="margin: 10px; margin-left: 15px; width: 60px;" id="imageWidth" required>
+
+                            <label for="imageHeight">Height:</label>
+                            <input type="number" class="no-style" style="margin: 10px; width: 60px;" id="imageHeight" required>
+                            <br>
+                            <div style="margin-bottom: 5px; margin-top: 10px;">
+                                <label for="format">Format:</label>
+                            </div>
+                            <input type="radio" class="data-format" id="int16" name="format" value="int16" checked>
+                            <label for="int16">Int16</label>
+                            <input type="radio" class="data-format" id="uint16" name="format" value="uint16">
+                            <label for="uint16">Uint16</label>
+                            <input type="radio" class="data-format" id="int32" name="format" value="int32">
+                            <label for="int32">Int32</label>
+                            <input type="radio" class="data-format" id="uint32" name="format" value="uint32">
+                            <label for="uint32">Uint32</label>
+                            <input type="radio" id="float32" name="format" value="float32">
+                            <label for="float32">Float32</label>
+                            <input type="radio" id="float64" name="format" value="float64">
+                            <label for="float64">Float64</label>
+                            <br>
+                            <br>
+                            <button type="button" id="binButton" style="margin-left: 130px;" onclick="loadAndDisplayImage()">Load file</button>
+                            <button type="button" id="closeButton" onclick="closePopup()">Cancel</button>
+                        </form>
+                    </div>
+                    <div id="binimage1" style="margin-left: 15px; margin-top: 5px; margin-bottom: 25px;"></div>
+                    <div style="margin-left: 15px;">
+                        <canvas class="scalarExampleCanvas" width="129" height="129"></canvas>
+                        <canvas class="scalarExampleCanvas" width="129" height="129"></canvas>
+                    </div>
+                    <div style="margin-left: 15px;">
+                        <canvas class="scalarExampleCanvas" width="129" height="129"></canvas>
+                        <canvas class="scalarExampleCanvas" width="129" height="129"></canvas>
+                    </div>
+                    <div class="mapViz" style="margin: 5px;">
+                        <div class="map2" id="map2" style="margin: 10px;"></div>
+                        <div class="map1" id="map1" style="margin: 10px;"></div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <script>
+
+        function buttonGenerateText(text)
+        {
+            var BUTTON_GENERATE_HTML = 'Generate<span style="margin-left: 10px;">&#9662;</span>';
+            if (text == 'generate')
+            {
+                d3.select("#buttonGenerate").html(BUTTON_GENERATE_HTML);
+                d3.select("#generateDropDown")
+                    .style('display', null);
+            }
+            else {
+                d3.select("#buttonGenerate").html('Stop');
+                d3.select("#generateDropDown")
+                    .style('display', 'none');
+            }
+        }
+        var COLORMAP_H = 30*1.5;
+        var COLORMAP_W = 360*1.5;
+        var C_PAD = 10;
+
+        var LAST_MOUSE = null;
+        var DRAG_TRANSITION = 100, DRAG_START = 0;
+        var DRAG_WH = COLORMAP_H;
+        var DRAG_OFFSET=5;
+
+        var PICKER_W = COLORMAP_W;
+        var PICKER_H = 80*1.5;
+
+        var scaffold = null;
+        var picker = null;
+        var examples = null;
+
+        // history widget
+        var hist = null;
+        var histTop = 0;
+        let histCurr = 0;
+
+        let binImgFlag = false;
+
+        // Color Vision Deficiency
+        //var cvd = colorVisionDeficiency();
+        //var cvdArray;
+
+        // Luminance Profile Selection
+
+        d3.selectAll("img.lumProfileImage")
+            .each(function() {
+                var img = d3.select(this);
+
+
+                var profile = img.attr('id');
+                var inverted = false;
+                if (profile.indexOf('_') != -1)
+                {
+                    var tokens = profile.split("_");
+                    inverted = tokens[0] == "inverted";
+                    profile = tokens[1];
+                }
+                var lumProfile = new LuminanceProfile(profile, inverted);
+                var canvas = lumProfile.generateProfileImage(100, 30);
+                img.attr('src', canvas.toDataURL());
+
+            });
+
+        function updateLuminanceProfile(newOption)
+        {
+
+            if (newOption)
+            {
+                var tokens = newOption.indexOf('_') != -1 ? newOption.split('_') : [newOption];
+                var profile, inverted = false;
+                if (tokens.length > 1 && tokens[1] == 'inverted') {
+                    inverted = true;
+                    profile = tokens[0];
+                } else {
+                    profile = tokens[0];
+                }
+
+                profile = profile.charAt(0).toUpperCase() + profile.slice(1);
+
+                // check the relevant profile
+                var id = 'profile' + (inverted ? 'Inverted' : '') + profile;
+
+                $( ".luminanceButton").prop( "checked", false );
+                $( "#" + id ).prop( "checked", true );
+                //$("#" + id ).attr('checked', 'checked');
+                (function(profileID) {
+                    d3.selectAll("label.lumProfile")
+                        .each(function() {
+                            var id = d3.select(this).attr('id');
+                            if (id == 'label_' + profileID) {
+                                d3.select(this).classed('ui-state-active', true);
+                            }
+                            else {
+                                d3.select(this).classed('ui-state-active', false)
+                            }
+                        })
+                })(id);
+            }
+            scaffold.updateAllGradients();
+        }
+
+        // global function accessed by optimizer and
+        var profileSelection = "linear";
+
+        function getColorSpace() {
+            return picker;
+        }
+        function updateColorSpace() {
+            opt.updateColorSpace(picker);
+        }
+
+        function createUI()
+        {
+            d3.select("#svgMain").attr('height', 375-COLORMAP_H-10)
+
+            function createPicker(pickerType, oldPicker)
+            {
+                if (!pickerType) {
+                    if (document.getElementById("colorspaceRGB").checked) pickerType = "RGB";
+                    if (document.getElementById("colorspaceHSL").checked) pickerType = "HSL";
+                    if (document.getElementById("colorspaceHCL").checked) pickerType = "HCL";
+                    if (document.getElementById("colorspaceLAB").checked) pickerType = "LAB";
+                    if (document.getElementById("colorspaceJAB").checked) pickerType = "JAB";
+                }
+                var pickerFunc;
+                switch (pickerType) {
+                case "RGB": pickerFunc = PickerRGB; break;
+                case "HCL": pickerFunc = PickerHCL; break;
+                case "HSL": pickerFunc = PickerHSL; break;
+                case "LAB": pickerFunc = PickerLAB; break;
+                case "JAB": pickerFunc = PickerJAB; break;
+                }
+                var oldColor = null, updateColor = false;
+                if (oldPicker) {
+                    oldColor = oldPicker.getRGBColor();
+                    oldPicker.dispose();
+                    updateColor = true;
+                }
+                var p = new pickerFunc(d3.select("#newPicker"), PICKER_W, PICKER_H);
+                if (oldColor) {
+                    p.setRGBColor(oldColor);
+                }
+                if (scaffold) {
+                    SelectorEvent(scaffold);
+                }
+
+                picker = p;
+                if (updateColor) {
+                    updateColorSpace(p);
+                }
+                return p;
+            }
+            function createExampleScalars()
+            {
+                var selection = d3.selectAll(".scalarExampleCanvas");
+                var canvases = [];
+                (function(_sel, _canvases)
+                {
+                    _sel.each(function()
+                    {
+                        var id = d3.select(this).attr('id')
+                        if (id=='' || id ===null || id===undefined) {
+                            d3.select(this).attr('id', "canvasExample" + (_canvases.length+1));
+                        }
+                        _canvases.push(this);
+                    });
+                })(selection, canvases);
+
+                examples = new ScalarExamples(canvases);
+            }
+
+            var g = d3.select("#colormapUI");
+
+            // new picker
+            picker = createPicker();
+
+            // scalar examples
+            createExampleScalars();
+            combinedMapModule.createChoroplethMap1(function() {
+                combinedMapModule.updateChoroplethMap1(null);
+            });
+            combinedMapModule.createChoroplethMap2(function() {
+                combinedMapModule.updateChoroplethMap2(null);
+            });
+            // createBinImage(null);
+
+            // linegraph
+            drawAxes();
+
+            // create history
+            hist = new HistoryWidget(d3.select("#historyGroup"), 100);
+
+            var dropZone = g.append('g')
+                .attr('transform', 'translate(0,' + (C_PAD+COLORMAP_H) + ')');
+            scaffold = new ColormapScaffold(dropZone, COLORMAP_W, COLORMAP_H);
+
+            // add handlers to button events in the UI
+            // changing color space
+            d3.selectAll(".colorSpaceButton").on('click', function()
+            {
+                var id = d3.select(this).attr('id');
+                var pickerType = id.substr(10);
+                picker = createPicker(pickerType, picker);
+            });
+
+            // changing luminance profile
+            d3.selectAll(".luminanceButton").on('click', function()
+            {
+                var profile = document.querySelector('input[name="lumProfile"]:checked').value;
+                var inverted = false;
+                if (profile.indexOf('_') != -1)
+                {
+                    var tokens = profile.split("_");
+                    inverted = tokens[1] == "inverted";
+                    profile = tokens[0];
+                }
+                profileSelection = profile + (inverted ? '_inverted' : '');
+                updateLuminanceProfile();
+            });
+        }
+
+        function changeColor(color)
+        {
+            var d3color = d3.hsl(color.hsl[0], color.hsl[1]/100, color.hsl[2]/100);
+            d3.select("#selectedColor")
+                .style("fill", d3color.formatHex());
+        }
+
+        createUI();
+
+        function partialSolutionCallback(final)
+        {
+            if (final)
+            {
+                var colormap = opt.getColorMap();
+
+                // update examples
+                examples.setColorMap(colormap);
+                combinedMapModule.updateChoroplethMap1(opt.getColorMap());
+                combinedMapModule.updateChoroplethMap2(opt.getColorMap());
+
+                // CVD map
+                var selectedType = document.getElementById("visionDropdown").value;
+                d3.selectAll('.cvdImage, .cvdText').remove();
+                if(selectedType !== 'normal')
+                {
+
+                    var cvdMap = cvdSimulation(opt.getColorMap(), selectedType);
+                    drawCVDImage(cvdMap);
+                    d3.select("#svgMain").attr('height', 375);
+
+                }
+                else {
+                    d3.select("#svgMain").attr('height', 375-COLORMAP_H-10);
+
+                }
+
+                // linegraphs
+                let selLines = d3.selectAll('.linesButton:checked').nodes();
+                selLines.forEach(function(checkbox) {
+                    let selLine = checkbox.id;
+                    if(selLine === 'luminance') { drawLumGraph(opt.getColorMap()); }
+                    else if (selLine === 'perc_uniformity') { drawPUGraph(opt.getColorMap()); }
+                    else if (selLine === 'smoothness') { drawSmoGraph(opt.getSolution()); }
+                });
+
+                // add to history with history
+                hist.add(opt.getSolution(), 0);
+
+                // print export colors
+                appendElements(opt.getSolution());
+
+                // return button to "generate" label
+                buttonGenerateText('generate');
+                d3.select('#statusText')
+                    .html(null);
+
+
+
+
+            }
+            else {
+                buttonGenerateText('stop');
+
+                // linegraphs (continuous update)
+                let colormap = opt.getColorMap();
+                let solution = opt.getSolution();
+                if (colormap) {
+                    let selLines = d3.selectAll('.linesButton:checked').nodes();
+                    selLines.forEach(function (checkbox) {
+                        let selLine = checkbox.id;
+                        if (selLine === 'luminance' && colormap) { drawLumGraph(colormap); }
+                        else if (selLine === 'perc_uniformity' && colormap) { drawPUGraph(colormap); }
+                        else if (selLine === 'smoothness' && solution) { drawSmoGraph(solution); }
+                    });
+                }
+
+                // show seconds remaining
+                var seconds = opt.getRemainingSeconds();
+                if (seconds !== undefined)
+                {
+                    d3.select('#statusText')
+                        .html(seconds + " seconds remaining");
+                }
+            }
+
+            d3.select('#downArrow')
+                .text("\uf0d7");
+            d3.select('#upArrow')
+                .text("\uf0d8");
+
+        }
+
+        // create optimizer
+        var opt = new OptimizerWrapper(scaffold);
+        opt.addCallback(partialSolutionCallback);
+        function generateButton(designCount)
+        {
+            var isRunning = opt.isRunning();
+            if (!isRunning)
+            {
+                buttonGenerateText('stop');
+
+                opt.run(designCount);
+            }
+            else
+            {
+
+                opt.stop();
+                buttonGenerateText('generate');
+            }
+        }
+
+        $(document).ready(function()
+        {
+            // updated radio boxes to a more modern look
+            $("input:not(.no-style)").checkboxradio({
+                icon: false
+            });
+        });
+
+        // cvd menu dropdown
+        var selectedType = document.getElementById("visionDropdown");
+        selectedType.addEventListener("change", function() {
+            try {
+                var cvdCheck = document.getElementById("cvdCheckbox");
+                if(selectedType.value !== 'normal' || cvdCheck.checked) {
+                    var cvdMap = cvdSimulation(opt.getColorMap(), selectedType.value);
+                    drawCVDImage(cvdMap);
+                    d3.select("#svgMain").attr('height', 375)
+
+                }
+                else {
+                    d3.selectAll('.cvdImage, .cvdText').remove();
+                    d3.select("#svgMain").attr('height', 375-COLORMAP_H-10)
+
+                 }
+            }
+            catch (error) { return; }
+        });
+
+        function cvdInteract() {
+            var cvdSel = document.getElementById("visionDropdown").value;
+            var cvdCheck = document.getElementById("cvdCheckbox");
+            if(!cvdCheck.checked) {
+                clearCVD();
+            }
+            else if(cvdCheck.checked && cvdSel!== 'normal') {
+                buildCVD(cvdSel);
+            }
+            else if(cvdCheck.checked && cvdSel=='normal') {
+                cvdSel = 'deuteranomaly';
+                document.getElementById("visionDropdown").selectedIndex = 1;
+                if (opt.getColorMap()) {
+                    var cvdMap = cvdSimulation(opt.getColorMap(), cvdSel);
+                    drawCVDImage(cvdMap);
+                }
+                buildCVD(cvdSel);
+                d3.select("#svgMain").attr('height', 375);
+
+            }
+        }
+        var cvdSel = document.getElementById("visionDropdown");
+        var cvdCheck = document.getElementById("cvdCheckbox");
+        cvdCheck.addEventListener('change', cvdInteract);
+        cvdSel.addEventListener('change', cvdInteract);
+
+
+        // draw colormap image
+        var cvdSimLabel = null;
+        function drawCVDImage(cvdColormap) {
+            var colormapImage = d3.select("#colormapImage");
+            var cvdImage = d3.select("#cvdSimulationImage");
+            if (cvdImage.size() == 0) {
+                cvdImage = scaffold.getImagePlaceholder()
+                    .append("image")
+                        .attr('class', 'cvdImage')
+                        .attr('x', +colormapImage.attr('x'))
+                        .attr('y', +colormapImage.attr('y') + 10 + +colormapImage.attr('height'))
+                        .attr('width', colormapImage.attr('width'))
+                        .attr('height', colormapImage.attr('height'))
+                        .attr('id', 'cvdSimulationImage')
+
+                cvdSimLabel = new ShadowedText(
+                    scaffold.getImagePlaceholder(),
+                    "CVD simulation"
+                );
+                cvdSimLabel
+                    .attr('x', cvdImage.attr('x')+ +cvdImage.attr('width'))
+                    .attr('y', +cvdImage.attr('y')+ +cvdImage.attr('height')-4)
+                    .attr('text-anchor', 'end')
+                    .attr('class', 'cvdText');
+                /*
+                scaffold.getImagePlaceholder().append("text")
+                    .attr('class', 'smallText cvdText')
+                    .attr('x', cvdImage.attr('x')+ +cvdImage.attr('width'))
+                    .attr('y', +cvdImage.attr('y')+ +cvdImage.attr('height')-4)
+                    .text('CVD simulation')
+                    .style('fill', 'white')
+                    .attr('text-anchor', 'end');
+
+                    scaffold.getImagePlaceholder().append("text")
+                        .attr('class', 'smallText cvdText')
+                        .attr('x', +cvdImage.attr('x')+ +cvdImage.attr('width')-.5)
+                        .attr('y', +cvdImage.attr('y')+ +cvdImage.attr('height') -4-.5)
+                        .text('CVD simulation')
+                        .style('fill', 'black')
+                        .attr('text-anchor', 'end');
+                */
+            }
+            var bgColor = d3.lab(cvdColormap.mapValue(1));
+            if (bgColor.l > 60) {
+                cvdSimLabel.lightBackground();
+            } else {
+                cvdSimLabel.darkBackground();
+            }
+            colormapToImage(cvdColormap, cvdImage);
+        }
+
+        // Sliders
+        $(document).ready(function() {
+            // Continuity, Saliency, Colormap Quality
+            $('.slider').each(function() {
+                var $slider = $(this);
+                var sliderId = $slider.attr('id');
+                var min = parseInt($slider.data('min'));
+                var max = parseInt($slider.data('max'));
+                var value = parseInt($slider.data('value'));
+
+                $slider.slider({
+                    min: min,
+                    max: max,
+                    value: value,
+                    range: 'min',
+                    slide: function(event, ui) {
+                        if (sliderId === "sliderQual") { ITERATIONS_PER_TEMP = ui.value; $("#sliderQualValue").text(ui.value); }
+                        else if (sliderId === "sliderCon") { temp_CONT_VAL = ui.value; }
+                        else if (sliderId === "sliderSal") { temp_CONT_SAL = ui.value; }
+                    }
+                });
+                $slider.find('.ui-slider-handle').addClass(sliderId);
+            });
+
+
+            // Luminance Range
+            var valueDisplay = $("#sliderLumValue");
+            function updateValueDisplay(values) {
+                valueDisplay.text(values[0] + " - " + values[1]);
+            }
+            $(document).ready(function() {
+                $("#sliderLum").slider({
+                    range: true, min: 5, max: 95, values: LRANGE,
+                    slide: function(event, ui) {
+                        LRANGE = ui.values;
+                        updateValueDisplay(ui.values);
+                        scaffold.updateAllGradients();
+                    }
+                });
+                updateValueDisplay(LRANGE);
+
+                var defaultSmoothness = (SMOOTHNESS-SMOOTHNESS_RANGE[0])/(SMOOTHNESS_RANGE[1]-SMOOTHNESS_RANGE[0]);
+                $("#sliderCon").slider({
+                    range: 'min', min: 0, max: 1, value: 1-defaultSmoothness, step: 0.01,
+                    slide: function(event, ui) {
+                        adjustSmoothness(1- (+ui.value));
+                    }
+                });
+            });
+        });
+
+        // tooltip functions
+        const tooltip = d3.select("body").append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0);
+        let showTooltipTimer;
+        let hideTooltipTimer;
+
+        function showTooltip(content) {
+            showTooltipTimer = setTimeout(() => {
+                tooltip.transition()
+                    .duration(300)
+                    .style("opacity", 0.9);
+                tooltip.html(content);
+                hideTooltipTimeout = setTimeout(hideTooltip, 2000);
+            }, 1500);
+        }
+        function updateTooltip() {
+            tooltip.style("left", (d3.event.pageX + 10) + "px")
+                .style("top", (d3.event.pageY - 10) + "px");
+        }
+        function hideTooltip() {
+            clearTimeout(showTooltipTimer);
+            hideTooltipTimer = setTimeout(() => {
+                tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            }, 300);
+        }
+
+        // tooltips values
+        const switchTooltip = d3.select(".switch");
+        switchTooltip.on("mouseover", function () { showTooltip("Toggle to generate CVD-friendly colormaps"); }).on("mousemove", updateTooltip).on("mouseout", hideTooltip);
+        const lumsliderTooltip = d3.select("#sliderLum");
+        lumsliderTooltip.on("mouseover", function () { showTooltip("Adjust the min/max luminance of the colormap"); }).on("mousemove", updateTooltip).on("mouseout", hideTooltip);
+        const lumProfTooltip = d3.selectAll(".lumProfile");
+        lumProfTooltip.on("mouseover", function () { showTooltip("Select the type of luminance profile you want your colormap to have"); }).on("mousemove", updateTooltip).on("mouseout", hideTooltip);
+        const visionTooltip = d3.select("#visionDropdown");
+        visionTooltip.on("mouseover", function () { showTooltip("Select the type of CVD model you want to simulate and optimize for"); }).on("mousemove", updateTooltip).on("mouseout", hideTooltip);
+        const historyTooltip = d3.select(".controlLabel_history");
+        historyTooltip.on("mouseover", function () { showTooltip("Access colormap history, select from past generated designs, or remove unwanted ones"); }).on("mousemove", updateTooltip).on("mouseout", hideTooltip);
+        const qualsliderTooltip = d3.select("#sliderQual");
+        qualsliderTooltip.on("mouseover", function () { showTooltip("The level of optimization: Higher yields better colormaps but requires more time"); }).on("mousemove", updateTooltip).on("mouseout", hideTooltip);
+        const consliderTooltip = d3.select("#sliderCon");
+        consliderTooltip.on("mouseover", function () { showTooltip("Controls the level of hue variation within the scale"); }).on("mousemove", updateTooltip).on("mouseout", hideTooltip);
+        const perccharTooltip = d3.select(".collapseLines");
+        perccharTooltip.on("mouseover", function () { showTooltip("See how uniformity, luminance, and smoothness, change across the scale"); }).on("mousemove", updateTooltip).on("mouseout", hideTooltip);
+        const curveTooltip = d3.select(".collapseStats");
+        curveTooltip.on("mouseover", function () { showTooltip("Shows the colormap curve within the color space via 2D projections"); }).on("mousemove", updateTooltip).on("mouseout", hideTooltip);
+        const exportTooltip = d3.select(".exportBtn");
+        exportTooltip.on("mouseover", function () { showTooltip("Copy or download the colormap as a series of control points"); }).on("mousemove", updateTooltip).on("mouseout", hideTooltip);
+
+        // tutorial videos
+        document.addEventListener("DOMContentLoaded", function () {
+            var openTutorialButton = document.getElementById("tutorialVids");
+            var overlay = document.getElementById("overlay");
+
+            function openTutorial() {
+                overlay.style.display = "block";
+            }
+
+            openTutorialButton.onclick = openTutorial;
+            openTutorialButton.onclick = function () {
+                showVideoTutorial();
+            };
+            var seenTutorial = localStorage.getItem("seenTutorial");
+            if (!seenTutorial) {
+                openTutorial();
+            }
+            function showVideoTutorial() {
+                var tutorial = document.getElementById("myTutorial");
+                var videoPlayer = document.getElementById("videoPlayer");
+                var videoTitle = document.getElementById("videoTitle");
+                var videoLinksContainer = document.getElementById("videoLinks");
+                var videos = [
+                    { source: "profile/Tutorial/FinVid_1.mp4", title: "Specifying Color Preferences" },
+                    { source: "profile/Tutorial/FinVid_2.mp4", title: "Refining Generated Designs" },
+                    { source: "profile/Tutorial/FinVid_3.mp4", title: "Luminance Profile Settings" },
+                    { source: "profile/Tutorial/FinVid_4.mp4", title: "CVD Optimization Settings" }
+                ];
+                var currentVideoIndex = 0;
+                function loadVideo(index) {
+                    videoPlayer.src = videos[index].source;
+                    videoPlayer.load();
+                    videoTitle.textContent = videos[index].title;
+                    videoPlayer.play();
+                    updateVideoLinks(index);
+                }
+
+                function updateVideoLinks(activeIndex) {
+                    videoLinksContainer.innerHTML = "";
+                    // links for each video
+                    for (var i = 0; i < videos.length; i++) {
+                        var link = document.createElement("a");
+                        link.href = "#";
+                        link.textContent = videos[i].title;
+                        link.onclick = (function (index) {
+                            return function () {
+                                loadVideo(index);
+                            };
+                        })(i);
+                        if (i === activeIndex) {
+                            link.classList.add("active");
+                        }
+                        videoLinksContainer.appendChild(link);
+                    }
+                }
+                tutorial.style.display = "block";
+                document.getElementById("closeTutorial").onclick = function () {
+                    tutorial.style.display = "none";
+                    localStorage.setItem("seenTutorial", true);
+                };
+                window.onclick = function (event) {
+                    if (event.target === tutorial) {
+                        tutorial.style.display = "none";
+                        localStorage.setItem("seenTutorial", true);
+                    }
+                };
+                loadVideo(currentVideoIndex);
+            }
+        });
+
+        // Color Space Stats toggle
+        function toggleColormapStats() {
+            var colormapStats = document.getElementById("colormapStats");
+            var displayStatus = window.getComputedStyle(colormapStats).display;
+            var svgStats = document.getElementById("svgStats");
+            var collapseStatsElement = document.querySelector(".collapseStats");
+
+            if (displayStatus === "none") {
+                colormapStats.style.display = "block";
+                svgStats.style.display = "block";
+                collapseStatsElement.classList.remove("active");
+            } else {
+                colormapStats.style.display = "none";
+                svgStats.style.display = "none";
+                collapseStatsElement.classList.add("active");
+            }
+        }
+
+        // Color Linegraphs toggle
+        function toggleColormapLines() {
+            var colormapStats = document.getElementById("colormapLines");
+            var displayStatus = colormapStats.style.display;
+            var svgStats = document.getElementById("svgLines");
+            var collapseStatsElement = document.querySelector(".collapseLines");
+
+            if (displayStatus === "none" || displayStatus === "") {
+                colormapStats.style.display = "block";
+                svgStats.style.display = "block";
+                collapseStatsElement.classList.add("active");
+            } else {
+                colormapStats.style.display = "none";
+                svgStats.style.display = "none";
+                collapseStatsElement.classList.remove("active");
+            }
+        }
+
+        // Export Button toggle
+        function toggleExport() {
+            var exportStats = document.getElementById("exportStats");
+            var displayExport = exportStats.style.display;
+            var svgExport = document.getElementById("svgExport");
+            var exportStatsElement = document.querySelector(".exportBtn");
+
+            if (displayExport === "none" || displayExport === "") {
+                exportStats.style.display = "block";
+                svgExport.style.display = "block";
+                exportStatsElement.classList.add("active");
+            } else {
+                exportStats.style.display = "none";
+                svgExport.style.display = "none";
+                exportStatsElement.classList.remove("active");
+            }
+        }
+
+        // toggle side panels
+        function toggleSide(taskId) {
+            var colormapStats = document.getElementById("sideCard_" + taskId);
+            var displayStatus = colormapStats.style.display;
+            var collapseStatsElement = document.querySelector(".controlLabel_" + taskId);
+
+            if (displayStatus === "none" || displayStatus === "") {
+                colormapStats.style.display = "block";
+                collapseStatsElement.classList.remove("active");
+            } else {
+                colormapStats.style.display = "none";
+                collapseStatsElement.classList.add("active");
+            }
+        }
+
+        // add elements to export button svg
+        function appendElements(palette) {
+            var convArr = [];
+            var selSpace = document.getElementById("spaceDropdown").value;
+            var selKeys = document.getElementById("keysDropdown").value;
+            var textArea = document.getElementById('exportText');
+
+            var sampPalette = sampleColors(palette, selKeys);
+            sampPalette.forEach(function(color) {
+                convArr.push('"' + exportConversion[selSpace](color, 1) + '"');
+            });
+            textArea.value = '[' + convArr.join(', ') + ']';
+        }
+
+        function roundInt(f) {
+            return Math.floor(f+.5);
+        }
+        function fixedFloat(f) {
+            return f.toFixed(2);
+        }
+
+        // export text conversions
+        var exportConversion = {
+            LAB: function(color, type) {
+                if(type == 1) { return 'LAB(' + fixedFloat(color[0]) + ',' + fixedFloat(color[1]) + ',' + fixedFloat(color[2]) + ')'; }
+                else { return { L: +fixedFloat(color[0]), a: +fixedFloat(color[1]), b: +fixedFloat(color[2]) }; }
+            },
+            RGB: function(color, type) {
+                col = d3.lab(color[0], color[1], color[2]);
+                var rgbColor = col.rgb();
+                if(type == 1) { return 'RGB(' + roundInt(rgbColor.r) + ',' + roundInt(rgbColor.g) + ',' + roundInt(rgbColor.b) + ')'; }
+                else { return { r: roundInt(rgbColor.r), g: roundInt(rgbColor.g), b: roundInt(rgbColor.b) }; }
+            },
+            HEX: function(color) {
+                function colorToHex(c) {
+                    var hex = c.toString(16);
+                    return hex.length == 1 ? "0" + hex : hex;
+                }
+                col = d3.lab(color[0], color[1], color[2]);
+                var rgbColor = col.rgb();
+                return "#" + colorToHex(roundInt(rgbColor.r)) + colorToHex(roundInt(rgbColor.g)) + colorToHex(roundInt(rgbColor.b));
+            },
+            HSL: function(color, type) {
+                col = d3.lab(color[0], color[1], color[2]);
+                var hslColor = d3.hsl(col);
+                if(type == 1) { return 'HSL(' + roundInt(hslColor.h) + ',' + roundInt(hslColor.s * 100) + ',' + roundInt(hslColor.l * 100) + ')'; }
+                else { return { h: roundInt(hslColor.h), s: roundInt(hslColor.s * 100), l: roundInt(hslColor.l * 100) }; }
+            },
+            LCH: function(color, type) {
+                col = d3.lab(color[0], color[1], color[2]);
+                var hclColor = d3.hcl(col);
+                if(type == 1) { return 'LCH(' + fixedFloat(hclColor.l) + ',' + fixedFloat(hclColor.c) + ',' + fixedFloat(hclColor.h) + ')'; }
+                else { return { h: +fixedFloat(hclColor.h), c: +fixedFloat(hclColor.c), l: +fixedFloat(hclColor.l) }; }
+            },
+            JAB: function(color, type) {
+                col = d3.lab(color[0], color[1], color[2]);
+                var jabColor = d3.jab(col);
+                if(type == 1) { return 'JAB(' + fixedFloat(jabColor.J) + ',' + fixedFloat(jabColor.a) + ',' + fixedFloat(jabColor.b) + ')'; }
+                else { return { J: +fixedFloat(jabColor.J), a: +fixedFloat(jabColor.a), b: +fixedFloat(jabColor.b) }; }
+            }
+        }
+        var spaceDropdown = document.getElementById("spaceDropdown");
+        var keysDropdown = document.getElementById("keysDropdown");
+
+        spaceDropdown.addEventListener("change", function() {
+            try {
+                var palette = opt.getSolution();
+                appendElements(palette);
+            }
+            catch (error) { return; }
+        });
+        keysDropdown.addEventListener("change", function() {
+            try {
+                var palette = opt.getSolution();
+                appendElements(palette);
+            }
+            catch { return; }
+        });
+
+        // update linegraph on change
+        d3.selectAll('.linesButton').on('change', function() {
+            d3.selectAll('path.lineGraphPU').remove();
+            d3.selectAll('path.lineGraphSmo').remove();
+            d3.selectAll('path.lineGraphLum').remove();
+            d3.selectAll('text.PULabel').remove();
+            d3.selectAll('text.SmoLabel').remove();
+            d3.selectAll('text.lumLabel').remove();
+            d3.selectAll('.linesButton:checked').each(function() {
+                let selLine = d3.select(this);
+                try {
+                    if(selLine.attr('id') === 'luminance') { drawLumGraph(opt.getColorMap()); }
+                    else if (selLine.attr('id') === 'perc_uniformity') { drawPUGraph(opt.getColorMap()); }
+                    else if (selLine.attr('id') === 'smoothness') { drawSmoGraph(opt.getSolution()); }
+                } catch (error) {
+                    return;
+                }
+            });
+        });
+
+
+        // json and csv export
+        function exportMap(format) {
+            try {
+                // get colormap data
+                var expArr = [];
+                dataArray = opt.getSolution();
+                var selSpace = document.getElementById("spaceDropdown").value;
+                var selKeys = document.getElementById("keysDropdown").value;
+
+                var hexSamp = sampleColors(dataArray, selKeys);
+                var hexArr = hexSamp.map(hexCol => exportConversion['HEX'](hexCol, 0));
+
+                var sampArray = sampleColors(dataArray, selKeys);
+                var expArr = sampArray.map((col, k) => ({
+                    scale: k / (selKeys - 1),
+                    color: exportConversion[selSpace](col, 0),
+                    ...(selSpace !== 'HEX' ? { hexColor: hexArr[k] } : {})
+                }));
+
+                if (dataArray === undefined) {
+                    alert("colormap is not defined!");
+                }
+                else {
+                    // JSON
+                    if(format == 'json') {
+                        const json = JSON.stringify(expArr, null, 2);
+                        const blob = new Blob([json], { type: "application/json" });
+                        const url = URL.createObjectURL(blob);
+
+                        const link = document.createElement("a");
+                        link.href = url;
+                        link.download = "cmap.json";
+                        link.click();
+                    }
+                    // CSV
+                    else if(format == 'csv') {
+                        const csvMappings = {
+                            'LAB': {
+                                headers: 'scale,L,a,b,hex',
+                                colSpace: (item) => `${item.scale},${item.color.L},${item.color.a},${item.color.b},${item.hexColor}`,
+                            },
+                            'RGB': {
+                                headers: 'scale,r,g,b,hex',
+                                colSpace: (item) => `${item.scale},${item.color.r},${item.color.g},${item.color.b},${item.hexColor}`,
+                            },
+                            'HEX': {
+                                headers: 'scale,HEX',
+                                colSpace: (item) => `${item.scale},${item.color}`,
+                            },
+                            'HSL': {
+                                headers: 'scale,h,s,l,hex',
+                                colSpace: (item) => `${item.scale},${item.color.h},${item.color.s},${item.color.l},${item.hexColor}`,
+                            },
+                            'LCH': {
+                                headers: 'scale,h,c,l,hex',
+                                colSpace: (item) => `${item.scale},${item.color.h},${item.color.c},${item.color.l},${item.hexColor}`,
+                            },
+                            'JAB': {
+                                headers: 'scale,J,a,b,hex',
+                                colSpace: (item) => `${item.scale},${item.color.J},${item.color.a},${item.color.b},${item.hexColor}`,
+                            },
+                        };
+                        const { headers, colSpace } = csvMappings[selSpace];
+                        const csvData = expArr.map(colSpace);
+                        const csv = headers + "\n" + csvData.join("\n");
+                        const blob = new Blob([csv], { type: "text/csv" });
+                        const url = URL.createObjectURL(blob);
+
+                        const link = document.createElement("a");
+                        link.href = url;
+                        link.download = "cmap.csv";
+                        link.click();
+                    }
+                }
+            }
+            catch (error) {
+                alert('ColorMap is not generated yet!');
+            }
+        }
+
+        // custom data popup
+        var dImport = document.getElementById("darkImport");
+        dImport.addEventListener("click", function() {
+            popup.style.display = 'none';
+            dImport.style.display = "none";
+        });
+        function openPopup() {
+            document.getElementById("inputForm").reset();
+            const popup = document.getElementById('popup');
+            popup.style.display = 'block';
+            dImport.style.display = "block";
+        }
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            popup.style.display = 'none';
+            dImport.style.display = "none";
+        }
+
+        // HEX Code
+        var debounceTimer;
+        var hexColorInput = document.getElementById("hexColor");
+        hexColorInput.removeEventListener("input", handleHexColorInput);
+        hexColorInput.addEventListener("input", handleHexColorInput);
+        function handleHexColorInput() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(function () {
+                var hexColor = hexColorInput.value;
+                updateColorFromHex(hexColor);
+            }, 800);
+        }
+
+        // credits popup
+        var dImport = document.getElementById("darkImport");
+        dImport.addEventListener("click", function() {
+            popupCred.style.display = 'none';
+            dImport.style.display = "none";
+        });
+        function openCredits() {
+            document.getElementById("inputForm").reset();
+            const popupCred = document.getElementById('popupCred');
+            popupCred.style.display = 'block';
+            dImport.style.display = "block";
+        }
+        function closeCredits() {
+            const popupCred = document.getElementById('popupCred');
+            popupCred.style.display = 'none';
+            dImport.style.display = "none";
+        }
+
+    </script>
+</body>
+</html>

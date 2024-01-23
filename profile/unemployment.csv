@@ -1,0 +1,756 @@
+id,state,county,rate
+1001,Alabama,Autauga County,5.1
+1003,Alabama,Baldwin County,4.9
+1005,Alabama,Barbour County,8.6
+1007,Alabama,Bibb County,6.2
+1009,Alabama,Blount County,5.1
+1011,Alabama,Bullock County,7.1
+1013,Alabama,Butler County,6.7
+1015,Alabama,Calhoun County,6.1
+1017,Alabama,Chambers County,5
+1019,Alabama,Cherokee County,5
+1021,Alabama,Chilton County,5.2
+1023,Alabama,Choctaw County,7.9
+1025,Alabama,Clarke County,11.1
+1027,Alabama,Clay County,5.9
+1029,Alabama,Cleburne County,5.5
+1031,Alabama,Coffee County,5.6
+1033,Alabama,Colbert County,6.5
+1035,Alabama,Conecuh County,7.7
+1037,Alabama,Coosa County,5.7
+1039,Alabama,Covington County,6.7
+1041,Alabama,Crenshaw County,5.7
+1043,Alabama,Cullman County,4.8
+1045,Alabama,Dale County,5.6
+1047,Alabama,Dallas County,9.5
+1049,Alabama,DeKalb County,5.7
+1051,Alabama,Elmore County,4.7
+1053,Alabama,Escambia County,6.3
+1055,Alabama,Etowah County,5.7
+1057,Alabama,Fayette County,6.6
+1059,Alabama,Franklin County,5.5
+1061,Alabama,Geneva County,5.4
+1063,Alabama,Greene County,9.3
+1065,Alabama,Hale County,7.6
+1067,Alabama,Henry County,6.3
+1069,Alabama,Houston County,5.6
+1071,Alabama,Jackson County,5.9
+1073,Alabama,Jefferson County,5.5
+1075,Alabama,Lamar County,5.2
+1077,Alabama,Lauderdale County,6
+1079,Alabama,Lawrence County,6.4
+1081,Alabama,Lee County,4.9
+1083,Alabama,Limestone County,5
+1085,Alabama,Lowndes County,10.3
+1087,Alabama,Macon County,7.2
+1089,Alabama,Madison County,4.9
+1091,Alabama,Marengo County,6.9
+1093,Alabama,Marion County,6.1
+1095,Alabama,Marshall County,5.1
+1097,Alabama,Mobile County,6.5
+1099,Alabama,Monroe County,8.6
+1101,Alabama,Montgomery County,5.6
+1103,Alabama,Morgan County,5.2
+1105,Alabama,Perry County,10.9
+1107,Alabama,Pickens County,6.7
+1109,Alabama,Pike County,6.4
+1111,Alabama,Randolph County,5.7
+1113,Alabama,Russell County,5.3
+1115,Alabama,St. Clair County,5
+1117,Alabama,Shelby County,4.2
+1119,Alabama,Sumter County,7.3
+1121,Alabama,Talladega County,6.4
+1123,Alabama,Tallapoosa County,5.1
+1125,Alabama,Tuscaloosa County,5.5
+1127,Alabama,Walker County,7.2
+1129,Alabama,Washington County,8.3
+1131,Alabama,Wilcox County,8.9
+1133,Alabama,Winston County,7
+5001,Arkansas,Arkansas County,3.2
+5003,Arkansas,Ashley County,6.3
+5005,Arkansas,Baxter County,4.1
+5007,Arkansas,Benton County,2.7
+5009,Arkansas,Boone County,3.3
+5011,Arkansas,Bradley County,5.9
+5013,Arkansas,Calhoun County,5.1
+5015,Arkansas,Carroll County,2.8
+5017,Arkansas,Chicot County,6
+5019,Arkansas,Clark County,4.5
+5021,Arkansas,Clay County,5
+5023,Arkansas,Cleburne County,5.7
+5025,Arkansas,Cleveland County,4.4
+5027,Arkansas,Columbia County,5.7
+5029,Arkansas,Conway County,5.9
+5031,Arkansas,Craighead County,3.1
+5033,Arkansas,Crawford County,3.7
+5035,Arkansas,Crittenden County,4.4
+5037,Arkansas,Cross County,3.9
+5039,Arkansas,Dallas County,5
+5041,Arkansas,Desha County,5.1
+5043,Arkansas,Drew County,5.7
+5045,Arkansas,Faulkner County,3.7
+5047,Arkansas,Franklin County,3.9
+5049,Arkansas,Fulton County,3.9
+5051,Arkansas,Garland County,4
+5053,Arkansas,Grant County,3.2
+5055,Arkansas,Greene County,4
+5057,Arkansas,Hempstead County,3.7
+5059,Arkansas,Hot Spring County,3.6
+5061,Arkansas,Howard County,3.4
+5063,Arkansas,Independence County,5
+5065,Arkansas,Izard County,5.3
+5067,Arkansas,Jackson County,5.9
+5069,Arkansas,Jefferson County,5.9
+5071,Arkansas,Johnson County,4.8
+5073,Arkansas,Lafayette County,6.2
+5075,Arkansas,Lawrence County,4.5
+5077,Arkansas,Lee County,4.5
+5079,Arkansas,Lincoln County,4.9
+5081,Arkansas,Little River County,5.1
+5083,Arkansas,Logan County,4.4
+5085,Arkansas,Lonoke County,3.2
+5087,Arkansas,Madison County,3
+5089,Arkansas,Marion County,3.8
+5091,Arkansas,Miller County,4.3
+5093,Arkansas,Mississippi County,7.1
+5095,Arkansas,Monroe County,4.5
+5097,Arkansas,Montgomery County,4.6
+5099,Arkansas,Nevada County,3.7
+5101,Arkansas,Newton County,3.6
+5103,Arkansas,Ouachita County,5.6
+5105,Arkansas,Perry County,4.4
+5107,Arkansas,Phillips County,5.5
+5109,Arkansas,Pike County,3.8
+5111,Arkansas,Poinsett County,4.1
+5113,Arkansas,Polk County,4.7
+5115,Arkansas,Pope County,4.7
+5117,Arkansas,Prairie County,3.7
+5119,Arkansas,Pulaski County,3.5
+5121,Arkansas,Randolph County,4.6
+5123,Arkansas,St. Francis County,5
+5125,Arkansas,Saline County,3
+5127,Arkansas,Scott County,3.7
+5129,Arkansas,Searcy County,4.3
+5131,Arkansas,Sebastian County,3.5
+5133,Arkansas,Sevier County,4.8
+5135,Arkansas,Sharp County,5.2
+5137,Arkansas,Stone County,4.8
+5139,Arkansas,Union County,5.6
+5141,Arkansas,Van Buren County,6.4
+5143,Arkansas,Washington County,2.6
+5145,Arkansas,White County,4.8
+5147,Arkansas,Woodruff County,5.3
+5149,Arkansas,Yell County,4.4
+12001,Florida,Alachua County,4.4
+12003,Florida,Baker County,4.7
+12005,Florida,Bay County,4.6
+12007,Florida,Bradford County,4.2
+12009,Florida,Brevard County,5.2
+12011,Florida,Broward County,4.6
+12013,Florida,Calhoun County,5.9
+12015,Florida,Charlotte County,5.3
+12017,Florida,Citrus County,6.8
+12019,Florida,Clay County,4.4
+12021,Florida,Collier County,5.3
+12023,Florida,Columbia County,4.8
+12027,Florida,DeSoto County,6.1
+12029,Florida,Dixie County,5.3
+12031,Florida,Duval County,5.1
+12033,Florida,Escambia County,5
+12035,Florida,Flagler County,5.4
+12037,Florida,Franklin County,4.1
+12039,Florida,Gadsden County,6.3
+12041,Florida,Gilchrist County,5.1
+12043,Florida,Glades County,6.9
+12045,Florida,Gulf County,4.3
+12047,Florida,Hamilton County,4.4
+12049,Florida,Hardee County,7.2
+12051,Florida,Hendry County,11.5
+12053,Florida,Hernando County,6
+12055,Florida,Highlands County,6.9
+12057,Florida,Hillsborough County,4.5
+12059,Florida,Holmes County,5.6
+12061,Florida,Indian River County,6.6
+12063,Florida,Jackson County,5.4
+12065,Florida,Jefferson County,5.3
+12067,Florida,Lafayette County,3.8
+12069,Florida,Lake County,4.7
+12071,Florida,Lee County,4.7
+12073,Florida,Leon County,4.7
+12075,Florida,Levy County,5.2
+12077,Florida,Liberty County,5.4
+12079,Florida,Madison County,5.3
+12081,Florida,Manatee County,4.6
+12083,Florida,Marion County,5.9
+12085,Florida,Martin County,5
+12086,Florida,Miami-Dade County,5.6
+12087,Florida,Monroe County,3.1
+12089,Florida,Nassau County,4.6
+12091,Florida,Okaloosa County,3.9
+12093,Florida,Okeechobee County,5.8
+12095,Florida,Orange County,4.3
+12097,Florida,Osceola County,5
+12099,Florida,Palm Beach County,5.1
+12101,Florida,Pasco County,5.1
+12103,Florida,Pinellas County,4.3
+12105,Florida,Polk County,5.8
+12107,Florida,Putnam County,6
+12109,Florida,St. Johns County,3.6
+12111,Florida,St. Lucie County,6
+12113,Florida,Santa Rosa County,4.6
+12115,Florida,Sarasota County,4.5
+12117,Florida,Seminole County,4.2
+12119,Florida,Sumter County,6.7
+12121,Florida,Suwannee County,5.1
+12123,Florida,Taylor County,5.5
+12125,Florida,Union County,4.6
+12127,Florida,Volusia County,5
+12129,Florida,Wakulla County,4.1
+12131,Florida,Walton County,4.1
+12133,Florida,Washington County,5
+13001,Georgia,Appling County,6.9
+13003,Georgia,Atkinson County,4.6
+13005,Georgia,Bacon County,5.2
+13007,Georgia,Baker County,8.3
+13009,Georgia,Baldwin County,7.2
+13011,Georgia,Banks County,4.8
+13013,Georgia,Barrow County,4.6
+13015,Georgia,Bartow County,5
+13017,Georgia,Ben Hill County,8.1
+13019,Georgia,Berrien County,6.1
+13021,Georgia,Bibb County,5.7
+13023,Georgia,Bleckley County,7.6
+13025,Georgia,Brantley County,6.6
+13027,Georgia,Brooks County,4.8
+13029,Georgia,Bryan County,4.8
+13031,Georgia,Bulloch County,5.6
+13033,Georgia,Burke County,7.5
+13035,Georgia,Butts County,5.2
+13037,Georgia,Calhoun County,6
+13039,Georgia,Camden County,5.7
+13043,Georgia,Candler County,4.7
+13045,Georgia,Carroll County,5.9
+13047,Georgia,Catoosa County,4.8
+13049,Georgia,Charlton County,5.8
+13051,Georgia,Chatham County,5
+13053,Georgia,Chattahoochee County,8.6
+13055,Georgia,Chattooga County,6.1
+13057,Georgia,Cherokee County,4.1
+13059,Georgia,Clarke County,5.4
+13061,Georgia,Clay County,9.6
+13063,Georgia,Clayton County,6.4
+13065,Georgia,Clinch County,6
+13067,Georgia,Cobb County,4.4
+13069,Georgia,Coffee County,5.6
+13071,Georgia,Colquitt County,5.3
+13073,Georgia,Columbia County,4.8
+13075,Georgia,Cook County,5.2
+13077,Georgia,Coweta County,4.9
+13079,Georgia,Crawford County,5.5
+13081,Georgia,Crisp County,5.9
+13083,Georgia,Dade County,5.1
+13085,Georgia,Dawson County,4.5
+13087,Georgia,Decatur County,6.5
+13089,Georgia,DeKalb County,5.2
+13091,Georgia,Dodge County,7
+13093,Georgia,Dooly County,5.5
+13095,Georgia,Dougherty County,6.8
+13097,Georgia,Douglas County,5.3
+13099,Georgia,Early County,6.7
+13101,Georgia,Echols County,4.5
+13103,Georgia,Effingham County,4.7
+13105,Georgia,Elbert County,6.2
+13107,Georgia,Emanuel County,7.4
+13109,Georgia,Evans County,4.8
+13111,Georgia,Fannin County,5
+13113,Georgia,Fayette County,4.7
+13115,Georgia,Floyd County,5.9
+13117,Georgia,Forsyth County,4.1
+13119,Georgia,Franklin County,5.5
+13121,Georgia,Fulton County,5.2
+13123,Georgia,Gilmer County,5.4
+13125,Georgia,Glascock County,6.3
+13127,Georgia,Glynn County,5
+13129,Georgia,Gordon County,5.3
+13131,Georgia,Grady County,5.4
+13133,Georgia,Greene County,5.9
+13135,Georgia,Gwinnett County,4.6
+13137,Georgia,Habersham County,5
+13139,Georgia,Hall County,4.4
+13141,Georgia,Hancock County,8.9
+13143,Georgia,Haralson County,5.6
+13145,Georgia,Harris County,4.7
+13147,Georgia,Hart County,5.3
+13149,Georgia,Heard County,5.8
+13151,Georgia,Henry County,5.4
+13153,Georgia,Houston County,5.3
+13155,Georgia,Irwin County,7.3
+13157,Georgia,Jackson County,4.1
+13159,Georgia,Jasper County,4.7
+13161,Georgia,Jeff Davis County,6.3
+13163,Georgia,Jefferson County,7
+13165,Georgia,Jenkins County,7.1
+13167,Georgia,Johnson County,6
+13169,Georgia,Jones County,4.6
+13171,Georgia,Lamar County,6.4
+13173,Georgia,Lanier County,5.3
+13175,Georgia,Laurens County,6.4
+13177,Georgia,Lee County,4.8
+13179,Georgia,Liberty County,5.7
+13181,Georgia,Lincoln County,5.7
+13183,Georgia,Long County,5.6
+13185,Georgia,Lowndes County,5.2
+13187,Georgia,Lumpkin County,5
+13189,Georgia,McDuffie County,7.2
+13191,Georgia,McIntosh County,5.5
+13193,Georgia,Macon County,7.6
+13195,Georgia,Madison County,4.7
+13197,Georgia,Marion County,6.9
+13199,Georgia,Meriwether County,6.8
+13201,Georgia,Miller County,5.5
+13205,Georgia,Mitchell County,6.3
+13207,Georgia,Monroe County,4.9
+13209,Georgia,Montgomery County,7.1
+13211,Georgia,Morgan County,4.8
+13213,Georgia,Murray County,6.6
+13215,Georgia,Muscogee County,6.6
+13217,Georgia,Newton County,5.8
+13219,Georgia,Oconee County,4
+13221,Georgia,Oglethorpe County,4.5
+13223,Georgia,Paulding County,4.5
+13225,Georgia,Peach County,6.4
+13227,Georgia,Pickens County,4.8
+13229,Georgia,Pierce County,5.3
+13231,Georgia,Pike County,5.1
+13233,Georgia,Polk County,5.7
+13235,Georgia,Pulaski County,5.6
+13237,Georgia,Putnam County,6.8
+13239,Georgia,Quitman County,7.7
+13241,Georgia,Rabun County,5.4
+13243,Georgia,Randolph County,8.6
+13245,Georgia,Richmond County,6.5
+13247,Georgia,Rockdale County,5.5
+13249,Georgia,Schley County,6.4
+13251,Georgia,Screven County,6.9
+13253,Georgia,Seminole County,7.5
+13255,Georgia,Spalding County,6.5
+13257,Georgia,Stephens County,5.9
+13259,Georgia,Stewart County,5.8
+13261,Georgia,Sumter County,7.4
+13263,Georgia,Talbot County,6.6
+13265,Georgia,Taliaferro County,6.6
+13267,Georgia,Tattnall County,5.4
+13269,Georgia,Taylor County,7
+13271,Georgia,Telfair County,7.7
+13273,Georgia,Terrell County,6
+13275,Georgia,Thomas County,6.3
+13277,Georgia,Tift County,5.6
+13279,Georgia,Toombs County,7.3
+13281,Georgia,Towns County,6.3
+13283,Georgia,Treutlen County,7.3
+13285,Georgia,Troup County,5
+13287,Georgia,Turner County,6.4
+13289,Georgia,Twiggs County,8.2
+13291,Georgia,Union County,4.5
+13293,Georgia,Upson County,6.2
+13295,Georgia,Walker County,5.3
+13297,Georgia,Walton County,4.7
+13299,Georgia,Ware County,5.4
+13301,Georgia,Warren County,7
+13303,Georgia,Washington County,6.3
+13305,Georgia,Wayne County,6.6
+13307,Georgia,Webster County,8.6
+13309,Georgia,Wheeler County,8.5
+13311,Georgia,White County,4.4
+13313,Georgia,Whitfield County,5.7
+13315,Georgia,Wilcox County,6.8
+13317,Georgia,Wilkes County,6.7
+13319,Georgia,Wilkinson County,6
+13321,Georgia,Worth County,5.8
+22001,Louisiana,Acadia Parish,7.9
+22003,Louisiana,Allen Parish,7.5
+22005,Louisiana,Ascension Parish,5.3
+22007,Louisiana,Assumption Parish,9
+22009,Louisiana,Avoyelles Parish,7.8
+22011,Louisiana,Beauregard Parish,6.7
+22013,Louisiana,Bienville Parish,8
+22015,Louisiana,Bossier Parish,5.9
+22017,Louisiana,Caddo Parish,7.4
+22019,Louisiana,Calcasieu Parish,5.5
+22021,Louisiana,Caldwell Parish,8.4
+22023,Louisiana,Cameron Parish,4.8
+22025,Louisiana,Catahoula Parish,9.6
+22027,Louisiana,Claiborne Parish,7.5
+22029,Louisiana,Concordia Parish,9.2
+22031,Louisiana,De Soto Parish,8
+22033,Louisiana,East Baton Rouge Parish,5.7
+22035,Louisiana,East Carroll Parish,11.8
+22037,Louisiana,East Feliciana Parish,6.2
+22039,Louisiana,Evangeline Parish,8.5
+22041,Louisiana,Franklin Parish,9.6
+22043,Louisiana,Grant Parish,7.8
+22045,Louisiana,Iberia Parish,9.7
+22047,Louisiana,Iberville Parish,7.4
+22049,Louisiana,Jackson Parish,6.3
+22051,Louisiana,Jefferson Parish,5.9
+22053,Louisiana,Jefferson Davis Parish,6.7
+22055,Louisiana,Lafayette Parish,6.7
+22057,Louisiana,Lafourche Parish,6.7
+22059,Louisiana,La Salle Parish,6.7
+22061,Louisiana,Lincoln Parish,7.5
+22063,Louisiana,Livingston Parish,5.3
+22065,Louisiana,Madison Parish,9.4
+22067,Louisiana,Morehouse Parish,10.4
+22069,Louisiana,Natchitoches Parish,8.1
+22071,Louisiana,Orleans Parish,6.7
+22073,Louisiana,Ouachita Parish,6.7
+22075,Louisiana,Plaquemines Parish,5.9
+22077,Louisiana,Pointe Coupee Parish,7.2
+22079,Louisiana,Rapides Parish,6.9
+22081,Louisiana,Red River Parish,6.8
+22083,Louisiana,Richland Parish,7.7
+22085,Louisiana,Sabine Parish,7.3
+22087,Louisiana,St. Bernard Parish,6.9
+22089,Louisiana,St. Charles Parish,6
+22091,Louisiana,St. Helena Parish,8.5
+22093,Louisiana,St. James Parish,8.1
+22095,Louisiana,St. John the Baptist Parish,7.5
+22097,Louisiana,St. Landry Parish,8.9
+22099,Louisiana,St. Martin Parish,8.3
+22101,Louisiana,St. Mary Parish,10.1
+22103,Louisiana,St. Tammany Parish,5.7
+22105,Louisiana,Tangipahoa Parish,7.5
+22107,Louisiana,Tensas Parish,10.5
+22109,Louisiana,Terrebonne Parish,7.3
+22111,Louisiana,Union Parish,6.9
+22113,Louisiana,Vermilion Parish,7.9
+22115,Louisiana,Vernon Parish,8.1
+22117,Louisiana,Washington Parish,7.9
+22119,Louisiana,Webster Parish,9.4
+22121,Louisiana,West Baton Rouge Parish,6.1
+22123,Louisiana,West Carroll Parish,12
+22125,Louisiana,West Feliciana Parish,5.5
+22127,Louisiana,Winn Parish,8.5
+28001,Mississippi,Adams County,8.2
+28003,Mississippi,Alcorn County,5
+28005,Mississippi,Amite County,7.1
+28007,Mississippi,Attala County,6.5
+28009,Mississippi,Benton County,6.5
+28011,Mississippi,Bolivar County,7.4
+28013,Mississippi,Calhoun County,5.2
+28015,Mississippi,Carroll County,7.3
+28017,Mississippi,Chickasaw County,6.3
+28019,Mississippi,Choctaw County,5.3
+28021,Mississippi,Claiborne County,12.3
+28023,Mississippi,Clarke County,6.4
+28025,Mississippi,Clay County,7.8
+28027,Mississippi,Coahoma County,8.1
+28029,Mississippi,Copiah County,6.4
+28031,Mississippi,Covington County,5.6
+28033,Mississippi,DeSoto County,4.1
+28035,Mississippi,Forrest County,5.8
+28037,Mississippi,Franklin County,6.8
+28039,Mississippi,George County,7.7
+28041,Mississippi,Greene County,8
+28043,Mississippi,Grenada County,4.9
+28045,Mississippi,Hancock County,5.9
+28047,Mississippi,Harrison County,5.3
+28049,Mississippi,Hinds County,5.2
+28051,Mississippi,Holmes County,10.9
+28053,Mississippi,Humphreys County,11.2
+28055,Mississippi,Issaquena County,9.9
+28057,Mississippi,Itawamba County,4.8
+28059,Mississippi,Jackson County,6.4
+28061,Mississippi,Jasper County,7.8
+28063,Mississippi,Jefferson County,10.4
+28065,Mississippi,Jefferson Davis County,9.3
+28067,Mississippi,Jones County,5.9
+28069,Mississippi,Kemper County,8.2
+28071,Mississippi,Lafayette County,4.9
+28073,Mississippi,Lamar County,4.5
+28075,Mississippi,Lauderdale County,5.8
+28077,Mississippi,Lawrence County,7.4
+28079,Mississippi,Leake County,5.6
+28081,Mississippi,Lee County,4.8
+28083,Mississippi,Leflore County,9
+28085,Mississippi,Lincoln County,5.8
+28087,Mississippi,Lowndes County,5.9
+28089,Mississippi,Madison County,4.2
+28091,Mississippi,Marion County,6.8
+28093,Mississippi,Marshall County,5.7
+28095,Mississippi,Monroe County,6.3
+28097,Mississippi,Montgomery County,6.3
+28099,Mississippi,Neshoba County,5.4
+28101,Mississippi,Newton County,5.9
+28103,Mississippi,Noxubee County,8
+28105,Mississippi,Oktibbeha County,5.6
+28107,Mississippi,Panola County,6.7
+28109,Mississippi,Pearl River County,5.9
+28111,Mississippi,Perry County,7
+28113,Mississippi,Pike County,6.7
+28115,Mississippi,Pontotoc County,4.5
+28117,Mississippi,Prentiss County,5.3
+28119,Mississippi,Quitman County,8.3
+28121,Mississippi,Rankin County,3.8
+28123,Mississippi,Scott County,4.5
+28125,Mississippi,Sharkey County,8
+28127,Mississippi,Simpson County,5.5
+28129,Mississippi,Smith County,5.1
+28131,Mississippi,Stone County,6.8
+28133,Mississippi,Sunflower County,8.4
+28135,Mississippi,Tallahatchie County,5.7
+28137,Mississippi,Tate County,5.4
+28139,Mississippi,Tippah County,5.2
+28141,Mississippi,Tishomingo County,5.1
+28143,Mississippi,Tunica County,6.1
+28145,Mississippi,Union County,4.2
+28147,Mississippi,Walthall County,7.9
+28149,Mississippi,Warren County,6.4
+28151,Mississippi,Washington County,9.2
+28153,Mississippi,Wayne County,7.6
+28155,Mississippi,Webster County,6.1
+28157,Mississippi,Wilkinson County,10.1
+28159,Mississippi,Winston County,7.4
+28161,Mississippi,Yalobusha County,6
+28163,Mississippi,Yazoo County,7
+37001,North Carolina,Alamance County,4.8
+37003,North Carolina,Alexander County,4.5
+37005,North Carolina,Alleghany County,5.1
+37007,North Carolina,Anson County,5.9
+37009,North Carolina,Ashe County,4.5
+37011,North Carolina,Avery County,4.8
+37013,North Carolina,Beaufort County,5.6
+37015,North Carolina,Bertie County,6.4
+37017,North Carolina,Bladen County,6.7
+37019,North Carolina,Brunswick County,5.7
+37021,North Carolina,Buncombe County,3.9
+37023,North Carolina,Burke County,5.1
+37025,North Carolina,Cabarrus County,4.6
+37027,North Carolina,Caldwell County,5.3
+37029,North Carolina,Camden County,5.3
+37031,North Carolina,Carteret County,4.7
+37033,North Carolina,Caswell County,5.5
+37035,North Carolina,Catawba County,4.9
+37037,North Carolina,Chatham County,4.3
+37039,North Carolina,Cherokee County,5.4
+37041,North Carolina,Chowan County,6.5
+37043,North Carolina,Clay County,5.1
+37045,North Carolina,Cleveland County,5.6
+37047,North Carolina,Columbus County,6.1
+37049,North Carolina,Craven County,5.1
+37051,North Carolina,Cumberland County,6.3
+37053,North Carolina,Currituck County,4.6
+37055,North Carolina,Dare County,4.2
+37057,North Carolina,Davidson County,4.9
+37059,North Carolina,Davie County,4.6
+37061,North Carolina,Duplin County,5.4
+37063,North Carolina,Durham County,4.5
+37065,North Carolina,Edgecombe County,8.5
+37067,North Carolina,Forsyth County,4.9
+37069,North Carolina,Franklin County,5.1
+37071,North Carolina,Gaston County,5.3
+37073,North Carolina,Gates County,5.2
+37075,North Carolina,Graham County,7.1
+37077,North Carolina,Granville County,4.4
+37079,North Carolina,Greene County,5
+37081,North Carolina,Guilford County,5.3
+37083,North Carolina,Halifax County,7.8
+37085,North Carolina,Harnett County,5.8
+37087,North Carolina,Haywood County,4.4
+37089,North Carolina,Henderson County,4.3
+37091,North Carolina,Hertford County,6.5
+37093,North Carolina,Hoke County,6.5
+37095,North Carolina,Hyde County,6.4
+37097,North Carolina,Iredell County,4.7
+37099,North Carolina,Jackson County,5.1
+37101,North Carolina,Johnston County,4.5
+37103,North Carolina,Jones County,5.1
+37105,North Carolina,Lee County,5.7
+37107,North Carolina,Lenoir County,5.4
+37109,North Carolina,Lincoln County,4.6
+37111,North Carolina,McDowell County,4.6
+37113,North Carolina,Macon County,5.1
+37115,North Carolina,Madison County,4.9
+37117,North Carolina,Martin County,6.8
+37119,North Carolina,Mecklenburg County,4.7
+37121,North Carolina,Mitchell County,6
+37123,North Carolina,Montgomery County,5.2
+37125,North Carolina,Moore County,5
+37127,North Carolina,Nash County,6.8
+37129,North Carolina,New Hanover County,4.7
+37131,North Carolina,Northampton County,7.3
+37133,North Carolina,Onslow County,5.4
+37135,North Carolina,Orange County,4.5
+37137,North Carolina,Pamlico County,5.1
+37139,North Carolina,Pasquotank County,6.2
+37141,North Carolina,Pender County,5.2
+37143,North Carolina,Perquimans County,6.3
+37145,North Carolina,Person County,5.4
+37147,North Carolina,Pitt County,5.7
+37149,North Carolina,Polk County,4.9
+37151,North Carolina,Randolph County,4.8
+37153,North Carolina,Richmond County,6.9
+37155,North Carolina,Robeson County,7.3
+37157,North Carolina,Rockingham County,5.5
+37159,North Carolina,Rowan County,5.5
+37161,North Carolina,Rutherford County,6.6
+37163,North Carolina,Sampson County,5.6
+37165,North Carolina,Scotland County,8.9
+37167,North Carolina,Stanly County,4.7
+37169,North Carolina,Stokes County,4.9
+37171,North Carolina,Surry County,4.8
+37173,North Carolina,Swain County,4.9
+37175,North Carolina,Transylvania County,4.8
+37177,North Carolina,Tyrrell County,6.2
+37179,North Carolina,Union County,4.4
+37181,North Carolina,Vance County,7.3
+37183,North Carolina,Wake County,4.2
+37185,North Carolina,Warren County,7
+37187,North Carolina,Washington County,6.9
+37189,North Carolina,Watauga County,4.7
+37191,North Carolina,Wayne County,5.6
+37193,North Carolina,Wilkes County,4.7
+37195,North Carolina,Wilson County,8.1
+37197,North Carolina,Yadkin County,4.4
+37199,North Carolina,Yancey County,5.1
+45001,South Carolina,Abbeville County,6.1
+45003,South Carolina,Aiken County,5.6
+45005,South Carolina,Allendale County,9.1
+45007,South Carolina,Anderson County,5.2
+45009,South Carolina,Bamberg County,11.4
+45011,South Carolina,Barnwell County,8
+45013,South Carolina,Beaufort County,5.1
+45015,South Carolina,Berkeley County,5
+45017,South Carolina,Calhoun County,7.4
+45019,South Carolina,Charleston County,4.5
+45021,South Carolina,Cherokee County,6.6
+45023,South Carolina,Chester County,8.4
+45025,South Carolina,Chesterfield County,5.7
+45027,South Carolina,Clarendon County,7.1
+45029,South Carolina,Colleton County,5.8
+45031,South Carolina,Darlington County,6.8
+45033,South Carolina,Dillon County,7.1
+45035,South Carolina,Dorchester County,4.9
+45037,South Carolina,Edgefield County,6.1
+45039,South Carolina,Fairfield County,7.7
+45041,South Carolina,Florence County,5.8
+45043,South Carolina,Georgetown County,6.6
+45045,South Carolina,Greenville County,4.7
+45047,South Carolina,Greenwood County,5.8
+45049,South Carolina,Hampton County,6.2
+45051,South Carolina,Horry County,5.4
+45053,South Carolina,Jasper County,4.7
+45055,South Carolina,Kershaw County,5.8
+45057,South Carolina,Lancaster County,6
+45059,South Carolina,Laurens County,5.6
+45061,South Carolina,Lee County,8.2
+45063,South Carolina,Lexington County,4.5
+45065,South Carolina,McCormick County,5.8
+45067,South Carolina,Marion County,8.6
+45069,South Carolina,Marlboro County,9.1
+45071,South Carolina,Newberry County,4.8
+45073,South Carolina,Oconee County,5.5
+45075,South Carolina,Orangeburg County,11.3
+45077,South Carolina,Pickens County,5.6
+45079,South Carolina,Richland County,5.4
+45081,South Carolina,Saluda County,4.8
+45083,South Carolina,Spartanburg County,5.3
+45085,South Carolina,Sumter County,6.5
+45087,South Carolina,Union County,6.5
+45089,South Carolina,Williamsburg County,7.9
+45091,South Carolina,York County,5.2
+47001,Tennessee,Anderson County,5.1
+47003,Tennessee,Bedford County,5.3
+47005,Tennessee,Benton County,7.4
+47007,Tennessee,Bledsoe County,6.6
+47009,Tennessee,Blount County,4.5
+47011,Tennessee,Bradley County,4.7
+47013,Tennessee,Campbell County,6.7
+47015,Tennessee,Cannon County,4.9
+47017,Tennessee,Carroll County,7.1
+47019,Tennessee,Carter County,5.9
+47021,Tennessee,Cheatham County,4
+47023,Tennessee,Chester County,5.7
+47025,Tennessee,Claiborne County,6.4
+47027,Tennessee,Clay County,6.4
+47029,Tennessee,Cocke County,6
+47031,Tennessee,Coffee County,4.9
+47033,Tennessee,Crockett County,5.2
+47035,Tennessee,Cumberland County,5.9
+47037,Tennessee,Davidson County,3.8
+47039,Tennessee,Decatur County,7.3
+47041,Tennessee,DeKalb County,5.8
+47043,Tennessee,Dickson County,4.4
+47045,Tennessee,Dyer County,6.1
+47047,Tennessee,Fayette County,5.3
+47049,Tennessee,Fentress County,6
+47051,Tennessee,Franklin County,5.7
+47053,Tennessee,Gibson County,6.2
+47055,Tennessee,Giles County,4.3
+47057,Tennessee,Grainger County,5.4
+47059,Tennessee,Greene County,5.8
+47061,Tennessee,Grundy County,6.6
+47063,Tennessee,Hamblen County,5.3
+47065,Tennessee,Hamilton County,5
+47067,Tennessee,Hancock County,8
+47069,Tennessee,Hardeman County,6.2
+47071,Tennessee,Hardin County,6.2
+47073,Tennessee,Hawkins County,5.5
+47075,Tennessee,Haywood County,6.5
+47077,Tennessee,Henderson County,7
+47079,Tennessee,Henry County,6
+47081,Tennessee,Hickman County,4.6
+47083,Tennessee,Houston County,7.7
+47085,Tennessee,Humphreys County,6.2
+47087,Tennessee,Jackson County,7.3
+47089,Tennessee,Jefferson County,5.4
+47091,Tennessee,Johnson County,4.9
+47093,Tennessee,Knox County,4.3
+47095,Tennessee,Lake County,7.3
+47097,Tennessee,Lauderdale County,7.8
+47099,Tennessee,Lawrence County,5.9
+47101,Tennessee,Lewis County,5.8
+47103,Tennessee,Lincoln County,4.4
+47105,Tennessee,Loudon County,4.8
+47107,Tennessee,McMinn County,5.8
+47109,Tennessee,McNairy County,7.4
+47111,Tennessee,Macon County,4.5
+47113,Tennessee,Madison County,5.3
+47115,Tennessee,Marion County,6.7
+47117,Tennessee,Marshall County,4.8
+47119,Tennessee,Maury County,4.2
+47121,Tennessee,Meigs County,7.2
+47123,Tennessee,Monroe County,5.5
+47125,Tennessee,Montgomery County,5.5
+47127,Tennessee,Moore County,4.2
+47129,Tennessee,Morgan County,6.6
+47131,Tennessee,Obion County,7.5
+47133,Tennessee,Overton County,5.6
+47135,Tennessee,Perry County,6.2
+47137,Tennessee,Pickett County,5.7
+47139,Tennessee,Polk County,5.8
+47141,Tennessee,Putnam County,5.2
+47143,Tennessee,Rhea County,7.5
+47145,Tennessee,Roane County,5.8
+47147,Tennessee,Robertson County,4.4
+47149,Tennessee,Rutherford County,4
+47151,Tennessee,Scott County,7.4
+47153,Tennessee,Sequatchie County,6.1
+47155,Tennessee,Sevier County,4.2
+47157,Tennessee,Shelby County,5.8
+47159,Tennessee,Smith County,4.6
+47161,Tennessee,Stewart County,6.8
+47163,Tennessee,Sullivan County,5.5
+47165,Tennessee,Sumner County,4.1
+47167,Tennessee,Tipton County,5.9
+47169,Tennessee,Trousdale County,4.9
+47171,Tennessee,Unicoi County,6.9
+47173,Tennessee,Union County,5.9
+47175,Tennessee,Van Buren County,5.8
+47177,Tennessee,Warren County,4.8
+47179,Tennessee,Washington County,5.1
+47181,Tennessee,Wayne County,6.2
+47183,Tennessee,Weakley County,7.3
+47185,Tennessee,White County,5.4
+47187,Tennessee,Williamson County,3.7
+47189,Tennessee,Wilson County,4

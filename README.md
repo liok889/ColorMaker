@@ -2,7 +2,13 @@
 
 ColorMaker is a color design tool that makes it easy for visualization designers of all expertise to create high quality custom colormaps. Designers can easily specify their color requirements with simple drag and drop interactions. ColorMaker uses simulated annealing to generate a colormap that meets these specified preferences, while also satisfying the established perceptual guidelines.
 
-## How to deploy
+## How to use
+
+ColorMaker is available for use at: https://colormaker.org
+
+## How to deploy 
+
+You can also deploy your own instance for development or research:
 
 1. Download ColorMaker by either cloning the repository or downloading the zip file.
 2. To deploy the code, run a mini server (e.g., using Python: `python -m http.server 8080 &.`)

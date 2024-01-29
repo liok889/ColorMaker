@@ -167,7 +167,7 @@ ColormapScaffold.prototype.createUI = function()
         .html("add preferred colors here (if desired)")
         .style('fill', '#bababa')
         .style('stroke', 'none')
-        .style('font-size', this.h*.6);
+        .style('font-size', (this.h*.6) + "px");
 
 
     this.svg.append('image')
